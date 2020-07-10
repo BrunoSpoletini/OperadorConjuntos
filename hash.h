@@ -23,7 +23,7 @@ typedef struct _iNodo{
 typedef iNodo *iTree;
 
 typedef void (*funcionVisitante) (iTree nodo);
-/* /
+/*/
 
 
 
