@@ -40,6 +40,7 @@ void imprimir_dlist_pantalla(DList* lista, FuncionVisitante imprimir) {
   for (DNodo *nodo = lista->primero; nodo != NULL; nodo = nodo->sig){
     imprimir(nodo->dato);
   }
+  printf("\n");
 }
 
 DNodo* dividir_lista(DNodo* primero) { 
