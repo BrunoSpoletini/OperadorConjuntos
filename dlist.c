@@ -37,10 +37,12 @@ DList* dlist_agregar_final(DList* lista, void* dato) {
 }
 
 void imprimir_dlist_pantalla(DList* lista, FuncionVisitante imprimir) {
+  if(lista != NULL){
   for (DNodo *nodo = lista->primero; nodo != NULL; nodo = nodo->sig){
     imprimir(nodo->dato);
   }
   printf("\n");
+  }
 }
 
 DNodo* dividir_lista(DNodo* primero) { 

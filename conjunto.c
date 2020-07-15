@@ -4,15 +4,12 @@
 
 
 void  imprimir_dato(void* elemento){
-    printf("%d:%d ", ((ElemConj*)elemento)->inicio, ((ElemConj*)elemento)->extremo);
+    if(((ElemConj*)elemento)->inicio == ((ElemConj*)elemento)->extremo)
+        printf("%d ", ((ElemConj*)elemento)->inicio);
+    else
+        printf("%d:%d ", ((ElemConj*)elemento)->inicio, ((ElemConj*)elemento)->extremo);
 }
 
-int main(){
-    char entrada[1100];
-    fgets(entrada, 1100, stdin);
-    int num, num2, num3;
-    num2 = sscanf(entrada, "= {%*s : %d <= %*s <= %d}", &num, &num3);
-    printf("La salida del sscanf es: %d \nY el num obtenido es: %d %d\n",num2, num, num3);
-
-    return 0;
+int comparar_intervalo(void* dato1, void* dato2){
+    return ((ElemConj*)dato1)->inicio - (((ElemConj*)dato2)->inicio);
 }

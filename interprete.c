@@ -27,30 +27,39 @@ DList* leerConjuntoExtension(char* alias, char* buffer){
             i++;
         }
     }
+    lista = dlist_merge_sort(lista, comparar_intervalo);
     return lista;
 }
-/*/
-DList* leerConjuntoComprension(char* alias, char* buffer){
-    
-    sscanf("")
-    return lista;
 
-}/*/
+DList* leerConjuntoComprension(char* alias, char* entrada){
+    char char1, char2;
+    ElemConj *elem = malloc(sizeof(int)*2);
+    if((sscanf(entrada, "= {%c : %d <= %c <= %d}", &char1, &(elem->inicio), &char2, &(elem->extremo)) == 4) 
+        && (char1 == char2)){
+        DList *lista= dlist_crear();
+        lista->alias = malloc(sizeof(char)*strlen(alias));
+        strcpy(lista->alias, alias); 
+        
+        if(elem->inicio > elem->extremo){
+            free(elem);
+        }
+        else{
+            lista = dlist_agregar_final(lista, (void*) elem);
+        }
+        return lista;
+    }
+    else{
+        free(elem);
+        return NULL;
+    }
+    return NULL;
+
+}
 
 int main(){
-
-/*/
-    DList* A1 = dlist_crear();
-
-    ElemConj* primer = malloc(sizeof(int)*2);
-    primer->inicio=7;
-    primer->extremo=7;
-    
-    dlist_agregar_final(A1, (void*)primer);
-/*/
     int salir = 0;
     char entrada[1100], comando[1100], buffer[1100], caracter, alias[1000], alias2[1000];
-    DList *lista;
+    DList *lista = NULL;
     while(salir == 0){
         buffer[0]='0'; // Para borrar comandos que hayan quedado en el buffer
         fgets(entrada, 1100, stdin);
@@ -64,11 +73,16 @@ int main(){
                 if(buffer[2] == '{' && buffer[strlen(buffer)-1] == '}'){
                     if((48 <= buffer[3] && buffer[3] <= 57) || buffer[3] == '-'){
                         lista = leerConjuntoExtension(comando, buffer);
-
                         //ALMACENAR LA LISTA EN UNA TABLA HASH
                     }
                     else{
-                        //CONJUNTOS POR COMPRENSION
+                        lista = leerConjuntoComprension(comando, buffer);
+                        if(lista == NULL)
+                            printf("Ingrese un comando valido\n");
+                        else
+                        {
+                            //ALMACENAR LISTA EN EL HASH
+                        }
                     }
                 }
                 else if(buffer[2] == '~')

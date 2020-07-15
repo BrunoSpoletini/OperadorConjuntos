@@ -1,9 +1,10 @@
 //#include "hash.h"
 #include <stdio.h>
-#include <string.h>
 #include <math.h>
+#include <string.h>
 
-#define TABLESIZE  20000
+
+#define TABLESIZE  10
 
 int hash1(char* value){
     unsigned long long int key=0;
@@ -41,20 +42,12 @@ void checkHashFunction(){
 
 int main(){
     
- 
-    /*/
-    char entrada[100];
-    int salir = 0;
-    while(salir == 0){
-        gets(entrada);
+    int DATO = 7;
+    char* STRING = {"hola"};
+    printf("%s %d\n", STRING, hash1(STRING));
 
-        if (strcmp(entrada,"s") == 0)
-            salir = 1;
-        else
-            printf("%d\n",hash2(entrada));
-    }
-    /*/
 
-    checkHashFunction();
+
+
     return 0;
 }

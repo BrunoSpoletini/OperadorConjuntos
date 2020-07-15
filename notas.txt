@@ -3,7 +3,7 @@ gcc hash.c && ./a.exe
 #include <limits.h>
 
 A2 = {-10,4,6,-7}
-A1 = {x : 10 <= x <= 2}
+A1 = {x : 2 <= x <= 10}
 A = A | A1
 A = A & A1
 A = A - A1
@@ -11,6 +11,8 @@ salir
 imprimir A
 B1 = ∼B1
 
+gcc -std=c99 program.c program2.c -lm 
+// El -lm es para linkear cosas raras de math.h
 
 bibliografia:
 https://cp-algorithms.com/string/string-hashing.html

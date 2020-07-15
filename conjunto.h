@@ -12,4 +12,6 @@ typedef struct {
 
 void imprimir_dato(void* dato);
 
+int comparar_intervalo(void* dato1, void* dato2);
+
 #endif /* __CONJUNTO_H__ */
