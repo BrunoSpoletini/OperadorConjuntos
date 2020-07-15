@@ -10,17 +10,16 @@
 
 
 DList* leerConjuntoExtension(char* alias, char* buffer){
-    int i=0 ,cont=0;
+    int i=0;
     DList *lista= dlist_crear();
-    ElemConj *elem = malloc(sizeof(int)*2);
     char *buf = &buffer[0];
 
     while(buf[i] != '}'){
         if((48 <= buf[i] && buf[i] <= 57) || buf[i] == '-'){
+            ElemConj *elem = malloc(sizeof(int)*2);
             elem->inicio = (int)strtol(buf+i, &buf ,10);
             elem->extremo = elem->inicio;
-            dlist_agregar_final(lista, (void*)elem);
-            cont++;
+            lista = dlist_agregar_final(lista, (void*)elem);
             i=0;
         }
         else{
@@ -48,11 +47,9 @@ int main(){
     char entrada[1100], comando[1100], buffer[1100], caracter, alias[1000], alias2[1000];
     DList *lista;
     while(salir == 0){
-        //fgets(entrada);
-        fgets(entrada, 1100, stdin);
-        //scanf("%[^\n]", entrada);
-        printf("%s hola\n", entrada);
         buffer[0]='0'; // Para borrar comandos que hayan quedado en el buffer
+        fgets(entrada, 1100, stdin);
+        printf("%s\n", entrada);
         if(strcmp(entrada, "salir") == 0)
             salir = 1;
         else{
