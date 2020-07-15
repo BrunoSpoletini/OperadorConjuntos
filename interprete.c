@@ -3,12 +3,16 @@
 #include "conjunto.h"
 #include "dlist.h"
 
+#include <stdio.h>
+
+
+
+
 
 DList* leerConjuntoExtension(char* alias, char* buffer){
     int i=0 ,cont=0;
     DList *lista= dlist_crear();
     ElemConj *elem = malloc(sizeof(int)*2);
-    scanf("%s",buffer);
     char *buf = &buffer[0];
 
     while(buf[i] != '}'){
@@ -28,7 +32,9 @@ DList* leerConjuntoExtension(char* alias, char* buffer){
 
 
 
+
 int main(){
+
 /*/
     DList* A1 = dlist_crear();
 
@@ -42,14 +48,17 @@ int main(){
     char entrada[1100], comando[1100], buffer[1100], caracter, alias[1000], alias2[1000];
     DList *lista;
     while(salir == 0){
-        gets(entrada);
+        //fgets(entrada);
+        fgets(entrada, 1100, stdin);
+        //scanf("%[^\n]", entrada);
+        printf("%s hola\n", entrada);
         buffer[0]='0'; // Para borrar comandos que hayan quedado en el buffer
         if(strcmp(entrada, "salir") == 0)
             salir = 1;
         else{
-            sscanf(entrada, "%s %[^\0]", comando, buffer);
+            sscanf(entrada, "%s %[^\n]", comando, buffer);
             if(strcmp(comando, "imprimir") == 0)
-                printf("imprimir (buffer)\n");
+                imprimir_dlist_pantalla(lista, imprimir_dato); // Aca va a tener que buscar el alias en la tabla hash e imprimir ese conj
             else if(buffer[0] == '=' && buffer[1] == ' '){
                 if(buffer[2] == '{' && buffer[strlen(buffer)-1] == '}'){
                     if((48 <= buffer[3] && buffer[3] <= 57) || buffer[3] == '-'){

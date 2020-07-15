@@ -36,9 +36,9 @@ DList* dlist_agregar_final(DList* lista, void* dato) {
   return lista;
 }
 
-void imprimir_dlist_pantalla(DList* lista, FuncionVisitante liberar) {
+void imprimir_dlist_pantalla(DList* lista, FuncionVisitante imprimir) {
   for (DNodo *nodo = lista->primero; nodo != NULL; nodo = nodo->sig){
-    printf("%d\n", nodo->dato);
+    imprimir(nodo->dato);
   }
 }
 

@@ -10,6 +10,6 @@ typedef struct {
     int extremo;
 } ElemConj;
 
-
+void imprimir_dato(void* dato);
 
 #endif /* __CONJUNTO_H__ */
