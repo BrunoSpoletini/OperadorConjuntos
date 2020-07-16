@@ -1,4 +1,5 @@
 //#include "hash.h"
+#include <dlist.h>
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
@@ -6,7 +7,7 @@
 
 #define TABLESIZE  10
 
-int hash1(char* value){
+int hash_string(char* value){
     unsigned long long int key=0;
     for(int i=0; value[i] != '\0'; i++){
         key += value[i] * pow(2,(i%10));
@@ -38,6 +39,47 @@ void checkHashFunction(){
     }
     fclose(fp);
     printf("El porcentaje de colisiones es: %d%%\n",(sum*100)/i); 
+}
+
+DNodo** crear_tabla(){
+    DNodo** tabla = malloc(sizeof(DNodo)*TABLESIZE);
+    for(int i=0; i < TABLESIZE; i++){
+        tabla[i] = NULL;
+    }
+    return tabla;
+}
+
+DNodo* dnodo_crear(DList* conjunto){
+    DNodo* lista = malloc(sizeof(DNodo));
+    lista->ant = NULL;
+    lista->sig = NULL;
+    lista->dato = conjunto;
+    return lista;
+}
+
+void dnodo_agregar_siguiente(DList* conjunto, DNodo* iterador){
+    DNodo* nuevoNodo = malloc(sizeof(DNodo));
+    iterador->sig = nuevoNodo;
+    nuevoNodo->ant = iterador;
+    nuevoNodo->sig = NULL;
+    nuevoNodo->dato = conjunto;
+}
+
+DNodo** almacenar_dato(DList* conjunto, DNodo** tabla){
+    int hash = hash_string(conjunto->alias);
+    DNodo* iterador;
+    if(tabla[hash] == NULL){
+        tabla[hash] = dnodo_crear(conjunto);
+    }
+    else{
+         for(iterador = tabla[hash];(strcmp(((DList*)iterador->dato)->alias, conjunto->alias) == 0) && ((iterador->sig)!=NULL); iterador = iterador->sig){}
+            if(strcmp(((DList*)iterador->dato)->alias, conjunto->alias) == 0)
+                iterador->dato = conjunto;
+            else  if(iterador->sig == NULL)
+               dnodo_agregar_siguiente(conjunto, iterador); //CAMBIAR TODO ESTO POR ARBOLES :(
+            
+    }
+    return tabla;
 }
 
 int main(){
