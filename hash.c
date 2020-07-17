@@ -1,5 +1,6 @@
 //#include "hash.h"
-#include <dlist.h>
+#include "dlist.h"
+#include "ctree.h"
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
@@ -41,14 +42,8 @@ void checkHashFunction(){
     printf("El porcentaje de colisiones es: %d%%\n",(sum*100)/i); 
 }
 
-DNodo** crear_tabla(){
-    DNodo** tabla = malloc(sizeof(DNodo)*TABLESIZE);
-    for(int i=0; i < TABLESIZE; i++){
-        tabla[i] = NULL;
-    }
-    return tabla;
-}
 
+/*/
 DNodo* dnodo_crear(DList* conjunto){
     DNodo* lista = malloc(sizeof(DNodo));
     lista->ant = NULL;
@@ -80,13 +75,25 @@ DNodo** almacenar_dato(DList* conjunto, DNodo** tabla){
             
     }
     return tabla;
+}/*/
+
+CTree* crear_tabla(){
+    CTree* tabla = malloc(sizeof(CTree)*TABLESIZE);
+    for(int i=0; i < TABLESIZE; i++){
+        tabla[i] = NULL;
+    }
+    return tabla;
+}
+
+CTree* almacenar_dato(DList* dato, CTree* tabla){
+    return ctree_insertar(tabla, dato); //Claramente esto no es necesario
 }
 
 int main(){
     
     int DATO = 7;
     char* STRING = {"hola"};
-    printf("%s %d\n", STRING, hash1(STRING));
+    printf("%s %d\n", STRING, hash_string(STRING));
 
 
 

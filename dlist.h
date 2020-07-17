@@ -4,6 +4,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 typedef struct _DNodo{
   void *dato ;
@@ -22,7 +23,7 @@ typedef void (*FuncionVisitante) (void* dato);
 typedef int (*Compara) (void* dato1, void* dato2);
 
 //  Devuelve una lista vacía.
-DList* dlist_crear();
+DList* dlist_crear(char* alias);
 
 //  Destruccion de la lista.
 void dlist_destruir(DList* lista, FuncionVisitante liberar);
@@ -60,5 +61,10 @@ DList* dlist_copia(DList* lista);
 //  Dada una dlist, destruye los nodos de la lista sin liberar los datos de los nodos.
 void dlist_destruir_copia(DList* lista);
 
+// Realiza la comparacion entre los alias de dos DLists
+int dlist_comparar(void* dato1, void* dato2);
+
+//debbug
+void imprimir_alias(void* dato);
 
 #endif /* __DLIST_H__ */

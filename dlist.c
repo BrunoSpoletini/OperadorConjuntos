@@ -1,10 +1,12 @@
 #include "dlist.h"
 #include <stdlib.h>
  
-DList* dlist_crear() {
+DList* dlist_crear(char* alias) {
   DList *lista = malloc(sizeof(DList));
   lista->primero = NULL;
   lista->ultimo = NULL;
+  lista->alias = malloc(sizeof(char)*strlen(alias));
+  strcpy(lista->alias, alias); 
   return lista;
 }
 
@@ -16,6 +18,7 @@ void dlist_destruir(DList* lista, FuncionVisitante liberar) {
     liberar(nodoAEliminar->dato);
     free(nodoAEliminar);
   }
+  free(lista->alias);
   free(lista);
 }
 
@@ -108,7 +111,7 @@ DList* dlist_merge_sort(DList* lista, Compara comparar) {
 }
 
 DList* dlist_copia(DList* lista) {
-  DList* copiaLista = dlist_crear();
+  DList* copiaLista = dlist_crear(lista->alias);
 
   for (DNodo *nodo = lista->primero; nodo != NULL; nodo = nodo->sig) {
     dlist_agregar_final(copiaLista, nodo->dato);
@@ -126,4 +129,16 @@ void dlist_destruir_copia(DList* lista) {
     free(nodoAEliminar);
   }
   free(lista);
+}
+
+int dlist_comparar(void* dato1, void* dato2){
+  return strcmp(((DList*)dato1)->alias, ((DList*)dato2)->alias);
+}
+
+
+void imprimir_alias(void* dato){ //DEBUG
+if(dato == NULL)
+  printf("NULL\n");
+else
+  printf("%s\n", ((DList*)dato)->alias);
 }

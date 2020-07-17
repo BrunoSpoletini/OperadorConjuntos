@@ -11,9 +11,7 @@
 
 DList* leerConjuntoExtension(char* alias, char* buffer){
     int i=0;
-    DList *lista= dlist_crear();
-    lista->alias = malloc(sizeof(char)*strlen(alias));
-    strcpy(lista->alias, alias); 
+    DList *lista= dlist_crear(alias);
     char *buf = &buffer[0]; // Intentar hacer esto directamente con buffer
     while(buf[i] != '}'){
         if((48 <= buf[i] && buf[i] <= 57) || buf[i] == '-'){
@@ -36,9 +34,7 @@ DList* leerConjuntoComprension(char* alias, char* entrada){
     ElemConj *elem = malloc(sizeof(int)*2);
     if((sscanf(entrada, "= {%c : %d <= %c <= %d}", &char1, &(elem->inicio), &char2, &(elem->extremo)) == 4) 
         && (char1 == char2)){
-        DList *lista= dlist_crear();
-        lista->alias = malloc(sizeof(char)*strlen(alias));
-        strcpy(lista->alias, alias); 
+        DList *lista= dlist_crear(alias); 
         
         if(elem->inicio > elem->extremo){
             free(elem);
