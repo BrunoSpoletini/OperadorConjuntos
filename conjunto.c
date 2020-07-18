@@ -4,10 +4,11 @@
 
 
 void  imprimir_dato(void* elemento){
+
     if(((ElemConj*)elemento)->inicio == ((ElemConj*)elemento)->extremo)
-        printf("%d ", ((ElemConj*)elemento)->inicio);
+        printf("%d", ((ElemConj*)elemento)->inicio);
     else
-        printf("%d:%d ", ((ElemConj*)elemento)->inicio, ((ElemConj*)elemento)->extremo);
+        printf("%d:%d", ((ElemConj*)elemento)->inicio, ((ElemConj*)elemento)->extremo);
 }
 
 int comparar_intervalo(void* dato1, void* dato2){

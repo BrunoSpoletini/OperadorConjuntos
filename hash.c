@@ -95,6 +95,11 @@ CTree* insertar_elem_tabla(void* dato, CTree* tabla, FuncionObtencion obtenerCad
     return tabla;
 }
 
+void* buscar_elem_tabla(char* string, CTree* tabla){
+    int hash = hash_string(string);
+    return ctree_buscar(string, tabla[hash], comparar_alias, dlist_alias);
+}
+
 void imprimir_tabla(CTree* tabla, FuncionV imprimir_alias){
     for(int i=0; i<TABLESIZE; i++){
         printf("En la posc %d hay: ", i);

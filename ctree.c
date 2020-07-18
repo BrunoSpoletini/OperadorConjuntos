@@ -1,6 +1,6 @@
 #include "ctree.h"
 
-#include "dlist.h" //Solo para debbug
+//#include "dlist.h" //Solo para debbug
 
 CTree ctree_crear() {
   return NULL;
@@ -148,3 +148,16 @@ void ctree_recorrer_dfs(CTree nodo, FuncionV func) {    // In-Order
     ctree_recorrer_dfs(nodo->der, func);
   }
 }
+
+
+void* ctree_buscar(char* dato, CTree nodo, FuncionComparacion comparar, FuncionObtencion obtener_dato){
+  if(nodo == NULL)
+    return NULL;
+  else if(comparar(dato, obtener_dato(nodo->dato)) == 0)
+    return nodo->dato;
+  else if(comparar(dato, obtener_dato(nodo->dato)) < 0)
+    ctree_buscar(dato, nodo->izq, comparar, obtener_dato);
+  else
+    ctree_buscar(dato, nodo->der, comparar, obtener_dato);
+}
+

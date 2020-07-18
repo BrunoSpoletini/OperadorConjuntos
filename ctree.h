@@ -18,6 +18,8 @@ typedef CNodo *CTree;
 
 typedef void (*FuncionV) (void* nodo);
 
+typedef char* (*FuncionObtencion) (void* dato); 
+
 typedef int (*FuncionComparacion) (void* dato1, void* dato2);
 
 // Crea un arbol de intervalos vacio.
@@ -61,5 +63,8 @@ CTree balancear(CTree nodo);
 // Recibe un nodo e imprime el intervalo que este contiene.
 void imprimir_intervalo(CTree nodo);
 
-#endif                          /* __ITREE_H__ */
+// Devuelve un puntero al dato buscado dentro del arbol dado
+void* ctree_buscar(char* dato, CTree nodo, FuncionComparacion comparar, FuncionObtencion obtener_dato);
+
+#endif /* __ITREE_H__ */
 

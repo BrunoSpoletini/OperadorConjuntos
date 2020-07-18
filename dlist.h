@@ -67,6 +67,9 @@ int dlist_comparar(void* dato1, void* dato2);
 // Devuelve el alias de la dlist ingresada
 char* dlist_alias(void* dato);
 
+// Realiza la comparacion entre dos arrays de caracteres
+int comparar_alias(void* dato1, void* dato2);
+
 //debbug
 void imprimir_alias(void* dato);
 

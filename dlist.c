@@ -39,15 +39,6 @@ DList* dlist_agregar_final(DList* lista, void* dato) {
   return lista;
 }
 
-void imprimir_dlist_pantalla(DList* lista, FuncionVisitante imprimir) {
-  if(lista != NULL){
-  for (DNodo *nodo = lista->primero; nodo != NULL; nodo = nodo->sig){
-    imprimir(nodo->dato);
-  }
-  printf("\n");
-  }
-}
-
 DNodo* dividir_lista(DNodo* primero) { 
   DNodo *saltoDe2 = primero;
   DNodo *saltoDe1 = primero;
@@ -135,6 +126,21 @@ int dlist_comparar(void* dato1, void* dato2){
   return strcmp(((DList*)dato1)->alias, ((DList*)dato2)->alias);
 }
 
+void imprimir_dlist_pantalla(DList* lista, FuncionVisitante imprimir) {
+  if((lista) != NULL){
+    for (DNodo *nodo = lista->primero; nodo != NULL; nodo = nodo->sig){
+      if(nodo->sig != NULL){
+        imprimir(nodo->dato);
+        printf(",");
+      }
+      else
+        imprimir(nodo->dato);
+    }
+    printf("\n");
+  }
+  else
+    printf("Ingrese un alias valido\n");
+}
 
 void imprimir_alias(void* dato){ //DEBUG
 if(dato == NULL)
@@ -145,4 +151,8 @@ else
 
 char* dlist_alias(void* dato){
   return ((DList*)dato)->alias;
+}
+
+int comparar_alias(void* dato1, void* dato2){
+  return strcmp((char*)dato1, (char*)dato2);
 }

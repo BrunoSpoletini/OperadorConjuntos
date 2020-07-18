@@ -19,4 +19,6 @@ CTree* insertar_elem_tabla(void* dato, CTree* tabla, FuncionObtencion obtenerCad
 
 void imprimir_tabla(CTree* tabla, FuncionV imprimir_alias);
 
+void* buscar_elem_tabla(char* string, CTree* tabla);
+
 #endif /* __HASH_H__ */

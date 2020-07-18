@@ -31,6 +31,7 @@ DList* leerConjuntoExtension(char* alias, char* buffer){
         }
     }
     lista = dlist_merge_sort(lista, comparar_enteros);
+    //Eliminar repetidos si los hay
     return lista;
 }
 
@@ -72,8 +73,7 @@ int main(){
             salir = 1;
         else{
             if(strcmp(comando, "imprimir") == 0)
-                //imprimir_tabla(tabla, imprimir_alias); //Esta no es la funcion final del programa
-                imprimir_dlist_pantalla(lista, imprimir_dato); // Aca va a tener que buscar el alias en la tabla hash e imprimir ese conj
+                imprimir_dlist_pantalla((DList*)buscar_elem_tabla(buffer, tabla), imprimir_dato);
             else if(buffer[0] == '=' && buffer[1] == ' '){
                 if(buffer[2] == '{' && buffer[strlen(buffer)-1] == '}'){
                     if((48 <= buffer[3] && buffer[3] <= 57) || buffer[3] == '-'){
@@ -85,16 +85,14 @@ int main(){
                         if(lista == NULL)
                             printf("Ingrese un comando valido\n");
                         else
-                        {
                             tabla = insertar_elem_tabla((void*)lista, tabla, dlist_alias, dlist_comparar);
-                        }
                     }
                 }
                 else if(buffer[2] == '~')
                     printf("comando = complemento de (*buffer)+2\n");
                 else{
                      sscanf(buffer, "= %s %c %s", entrada, &caracter, alias);
-                     if(caracter == '|')
+                     if(caracter == '|') //Esto se puede hacer con una funcion que reciba como parametro el caracter
                         printf("comando = entrada | alias\n");
                      else if(caracter == '&')
                          printf("comando = entrada & alias\n");
