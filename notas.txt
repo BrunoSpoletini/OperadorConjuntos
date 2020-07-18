@@ -21,5 +21,7 @@ https://www.smartick.es/blog/matematicas/numeros/numeros-primos-criba-eratostene
 
 
 
-
-
+A2 = {4,6}
+B = {-8}
+A22 = {-10,4,6,-7}
+B = {-7}

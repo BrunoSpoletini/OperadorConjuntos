@@ -3,28 +3,20 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include "ctree.h"
 
+typedef char* (*FuncionObtencion) (void* dato); 
 
-/*/
-typedef struct _intervalo{
-  double inicio;
-  double final;
-}intervalo;
+int hash_string(char* value);
 
+int hash2(char* value);
 
-typedef struct _iNodo{
-  intervalo *intervalo;
-  double maximo;
-  int altura;
-  struct _iNodo *izq;
-  struct _iNodo *der;
-} iNodo;
+void checkHashFunction();
 
-typedef iNodo *iTree;
+CTree* crear_tabla();
 
-typedef void (*funcionVisitante) (iTree nodo);
-/*/
+CTree* insertar_elem_tabla(void* dato, CTree* tabla, FuncionObtencion obtenerCadena, FuncionComparacion dlist_comparar);
 
-
+void imprimir_tabla(CTree* tabla, FuncionV imprimir_alias);
 
 #endif /* __HASH_H__ */

@@ -1,4 +1,4 @@
-//#include "hash.h"
+#include "hash.h"
 #include "dlist.h"
 #include "ctree.h"
 #include <stdio.h>
@@ -84,19 +84,21 @@ CTree* crear_tabla(){
     }
     return tabla;
 }
-
+/*/
 CTree* almacenar_dato(DList* dato, CTree* tabla){
     return ctree_insertar(tabla, dato); //Claramente esto no es necesario
+}/*/
+
+CTree* insertar_elem_tabla(void* dato, CTree* tabla, FuncionObtencion obtenerCadena, FuncionComparacion dlist_comparar){
+    int hash = hash_string(obtenerCadena(dato));
+    tabla[hash] = ctree_insertar(tabla[hash], (void*)dato, dlist_comparar);
+    return tabla;
 }
 
-int main(){
-    
-    int DATO = 7;
-    char* STRING = {"hola"};
-    printf("%s %d\n", STRING, hash_string(STRING));
-
-
-
-
-    return 0;
+void imprimir_tabla(CTree* tabla, FuncionV imprimir_alias){
+    for(int i=0; i<TABLESIZE; i++){
+        printf("En la posc %d hay: ", i);
+        ctree_recorrer_dfs(tabla[i], imprimir_alias);
+        printf("\n");
+    }
 }

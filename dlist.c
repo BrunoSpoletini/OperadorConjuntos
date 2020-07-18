@@ -142,3 +142,7 @@ if(dato == NULL)
 else
   printf("%s\n", ((DList*)dato)->alias);
 }
+
+char* dlist_alias(void* dato){
+  return ((DList*)dato)->alias;
+}

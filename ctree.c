@@ -86,8 +86,8 @@ CTree ctree_insertar(CTree nodo, void* dato, FuncionComparacion comparar) {
     nodo = llenar_nodo(dato);
   else {
     if(comparar(nodo->dato, dato) == 0)
-      nodo = llenar_nodo(dato);
-    if(comparar(nodo->dato, dato) < 0)
+      nodo->dato = dato;
+    else if(comparar(nodo->dato, dato) < 0)
       nodo->izq = ctree_insertar(nodo->izq, dato, comparar);
     else
       nodo->der = ctree_insertar(nodo->der, dato, comparar);
@@ -147,22 +147,4 @@ void ctree_recorrer_dfs(CTree nodo, FuncionV func) {    // In-Order
     func(nodo->dato);
     ctree_recorrer_dfs(nodo->der, func);
   }
-}
-
-
-
-int main(){
-  CTree arbol = NULL;
-
-  DList* lista1 = dlist_crear("A");
-  DList* lista2 = dlist_crear("B");
-  DList* lista3 = dlist_crear("C");
-
-  arbol = ctree_insertar(arbol, ((void*)lista2), dlist_comparar);
-  arbol = ctree_insertar(arbol, ((void*)lista1), dlist_comparar);
-  arbol = ctree_insertar(arbol, ((void*)lista3), dlist_comparar);
-
-  ctree_recorrer_dfs(arbol, imprimir_alias);
-
-  return 0;
 }

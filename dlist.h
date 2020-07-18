@@ -64,6 +64,9 @@ void dlist_destruir_copia(DList* lista);
 // Realiza la comparacion entre los alias de dos DLists
 int dlist_comparar(void* dato1, void* dato2);
 
+// Devuelve el alias de la dlist ingresada
+char* dlist_alias(void* dato);
+
 //debbug
 void imprimir_alias(void* dato);
 

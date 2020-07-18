@@ -1,12 +1,17 @@
 #include <stdlib.h>
 #include <string.h>
+
 #include "conjunto.h"
 #include "dlist.h"
+#include "hash.h"
+#include "ctree.h"
 
 #include <stdio.h>
 
 
-
+int comparar_enteros(void* num1, void* num2){
+    return (*(int*)num1)-(*(int*)num2);
+}
 
 
 DList* leerConjuntoExtension(char* alias, char* buffer){
@@ -25,7 +30,7 @@ DList* leerConjuntoExtension(char* alias, char* buffer){
             i++;
         }
     }
-    lista = dlist_merge_sort(lista, comparar_intervalo);
+    lista = dlist_merge_sort(lista, comparar_enteros);
     return lista;
 }
 
@@ -53,6 +58,9 @@ DList* leerConjuntoComprension(char* alias, char* entrada){
 }
 
 int main(){
+
+    CTree* tabla = crear_tabla();
+
     int salir = 0;
     char entrada[1100], comando[1100], buffer[1100], caracter, alias[1000], alias2[1000];
     DList *lista = NULL;
@@ -64,12 +72,13 @@ int main(){
             salir = 1;
         else{
             if(strcmp(comando, "imprimir") == 0)
+                //imprimir_tabla(tabla, imprimir_alias); //Esta no es la funcion final del programa
                 imprimir_dlist_pantalla(lista, imprimir_dato); // Aca va a tener que buscar el alias en la tabla hash e imprimir ese conj
             else if(buffer[0] == '=' && buffer[1] == ' '){
                 if(buffer[2] == '{' && buffer[strlen(buffer)-1] == '}'){
                     if((48 <= buffer[3] && buffer[3] <= 57) || buffer[3] == '-'){
                         lista = leerConjuntoExtension(comando, buffer);
-                        //ALMACENAR LA LISTA EN UNA TABLA HASH
+                        tabla = insertar_elem_tabla((void*)lista, tabla, dlist_alias, dlist_comparar);
                     }
                     else{
                         lista = leerConjuntoComprension(comando, buffer);
@@ -77,7 +86,7 @@ int main(){
                             printf("Ingrese un comando valido\n");
                         else
                         {
-                            //ALMACENAR LISTA EN EL HASH
+                            tabla = insertar_elem_tabla((void*)lista, tabla, dlist_alias, dlist_comparar);
                         }
                     }
                 }
