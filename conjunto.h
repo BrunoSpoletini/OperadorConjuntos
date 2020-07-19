@@ -14,4 +14,6 @@ void imprimir_dato(void* dato);
 
 int comparar_intervalo(void* dato1, void* dato2);
 
+void conjunto_eliminar(void* conjunto);
+
 #endif /* __CONJUNTO_H__ */

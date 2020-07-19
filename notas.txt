@@ -4,12 +4,13 @@ gcc hash.c && ./a.exe
 
 A2 = {-10,4,6,-7}
 A1 = {x : 2 <= x <= 10}
-A = A | A1
-A = A & A1
-A = A - A1
+A = A | A1 Union
+A = A & A1 Interseccion
+A = A - A1 Resta
+B1 = ∼B1 Complemento
 salir
 imprimir A
-B1 = ∼B1
+
 
 gcc -std=c99 program.c program2.c -lm 
 // El -lm es para linkear cosas raras de math.h
@@ -19,7 +20,8 @@ https://cp-algorithms.com/string/string-hashing.html
 https://www.smartick.es/blog/matematicas/numeros/numeros-primos-criba-eratostenes/#:~:text=Podemos%20determinar%20entonces%20que%20los,%2C%2083%2C%2089%20y%2097.
 
 
-
+errores a corregir:
+liberar el espacio de memoria del dato anterior cuando reasignas un valor a un alias
 
 A2 = {4,6}
 B = {-8}
@@ -28,3 +30,6 @@ B = {-7}
 
 A22 = {-10,4,6,-7}
 imprimir A22
+A = A | A1
+A = A & A1
+A = A - A1

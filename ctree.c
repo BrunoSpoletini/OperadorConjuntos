@@ -86,7 +86,7 @@ CTree ctree_insertar(CTree nodo, void* dato, FuncionComparacion comparar) {
     nodo = llenar_nodo(dato);
   else {
     if(comparar(nodo->dato, dato) == 0)
-      nodo->dato = dato;
+      nodo->dato = dato; //Aca hay que liberar el dato viejo antes de pisarlo
     else if(comparar(nodo->dato, dato) < 0)
       nodo->izq = ctree_insertar(nodo->izq, dato, comparar);
     else

@@ -30,8 +30,8 @@ DList* leerConjuntoExtension(char* alias, char* buffer){
             i++;
         }
     }
-    lista = dlist_merge_sort(lista, comparar_enteros);
-    //Eliminar repetidos si los hay
+    dlist_merge_sort(lista, comparar_enteros);
+    dlist_eliminar_repetidos(lista, comparar_intervalo, conjunto_eliminar);
     return lista;
 }
 
@@ -58,6 +58,23 @@ DList* leerConjuntoComprension(char* alias, char* entrada){
 
 }
 
+void comando_conjunto(char* comando, char* entrada, char* alias, char caracter){
+    switch (caracter){
+        case '|':
+        //conjunto_unir();
+            printf("%s = %s | %s\n", comando, entrada, alias);
+            break;
+        case '&':
+            printf("comando = entrada & alias\n");
+            break;
+        case '-':
+            printf("comando = entrada - alias\n");
+            break;
+        default:
+            printf("Ingrese un comando valido\n");
+    }
+}
+
 int main(){
 
     CTree* tabla = crear_tabla();
@@ -76,7 +93,7 @@ int main(){
                 imprimir_dlist_pantalla((DList*)buscar_elem_tabla(buffer, tabla), imprimir_dato);
             else if(buffer[0] == '=' && buffer[1] == ' '){
                 if(buffer[2] == '{' && buffer[strlen(buffer)-1] == '}'){
-                    if((48 <= buffer[3] && buffer[3] <= 57) || buffer[3] == '-'){
+                    if((48 <= buffer[3] && buffer[3] <= 57) || buffer[3] == '-' || buffer[3]=='}'){
                         lista = leerConjuntoExtension(comando, buffer);
                         tabla = insertar_elem_tabla((void*)lista, tabla, dlist_alias, dlist_comparar);
                     }
@@ -91,15 +108,8 @@ int main(){
                 else if(buffer[2] == '~')
                     printf("comando = complemento de (*buffer)+2\n");
                 else{
-                     sscanf(buffer, "= %s %c %s", entrada, &caracter, alias);
-                     if(caracter == '|') //Esto se puede hacer con una funcion que reciba como parametro el caracter
-                        printf("comando = entrada | alias\n");
-                     else if(caracter == '&')
-                         printf("comando = entrada & alias\n");
-                     else if(caracter == '-')
-                         printf("comando = entrada - alias\n");
-                     else
-                         printf("Ingrese un comando valido\n");
+                    sscanf(buffer, "= %s %c %s", entrada, &caracter, alias);
+                    comando_conjunto(comando, entrada, alias, caracter);
                 }
             }
             else

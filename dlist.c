@@ -86,7 +86,8 @@ DNodo* merge_sort(DNodo* primero, Compara comparar) {
 } 
 
 
-DList* dlist_merge_sort(DList* lista, Compara comparar) { 
+void dlist_merge_sort(DList* lista, Compara comparar) { 
+  if(lista->primero != NULL){
 
   DNodo *nodo = lista->primero;
 
@@ -97,11 +98,10 @@ DList* dlist_merge_sort(DList* lista, Compara comparar) {
   for (;nodo->sig != NULL;nodo = nodo->sig) //Este for tiene como funcion encontrar el final de la lista
 
   lista->ultimo = nodo;
-
-  return lista;
+  }
 }
 
-DList* dlist_copia(DList* lista) {
+DList* dlist_copia(DList* lista) { //Esto probablemente no sirva
   DList* copiaLista = dlist_crear(lista->alias);
 
   for (DNodo *nodo = lista->primero; nodo != NULL; nodo = nodo->sig) {
@@ -111,7 +111,7 @@ DList* dlist_copia(DList* lista) {
   return copiaLista;
 }
 
-void dlist_destruir_copia(DList* lista) {
+void dlist_destruir_copia(DList* lista) { //Esto probablemente no sirva
   DNodo *nodoAEliminar;
 
   while (lista->primero != NULL) {
@@ -122,24 +122,79 @@ void dlist_destruir_copia(DList* lista) {
   free(lista);
 }
 
+void dlist_eliminar_repetidos(DList* lista, Compara comparar, FuncionVisitante liberarDato){
+  DNodo* nodo = lista->primero;
+  while(nodo != NULL){
+    if(nodo->ant != NULL && comparar(nodo->dato, nodo->ant->dato) == 0){
+      eliminar_nodo(lista, nodo->ant, liberarDato);
+    }
+    nodo = nodo->sig;
+  }
+  //return lista; //Probar si se puede hacer tipo void
+}
+
+
+void eliminar_nodo(DList* lista, DNodo* nodo, FuncionVisitante liberarDato){
+  if(nodo->ant == NULL)
+    lista->primero = nodo->sig;
+  else
+    nodo->ant->sig = nodo->sig; 
+  if(nodo->sig == NULL)
+    lista->ultimo = nodo->ant;
+  else
+    nodo->sig->ant = nodo->ant;
+  liberarDato(nodo->dato); //Hecho así para mantener la generalidad
+  free(nodo);
+}
+
+ //////////////////////////////
+void mover_a_izquierda_de(DList * lista, DNodo * nodoPivote,
+                             DNodo * nodoAInsertar) {
+  if (nodoAInsertar->ant != NULL)  
+    (nodoAInsertar->ant)->sig = nodoAInsertar->sig;
+  
+  if (nodoAInsertar->sig != NULL) 
+    (nodoAInsertar->sig)->ant = nodoAInsertar->ant;
+  else 
+    lista->ultimo = nodoAInsertar->ant;
+    
+  nodoAInsertar->sig = nodoPivote;
+    
+  nodoAInsertar->ant = nodoPivote->ant;
+    
+  if (nodoPivote->ant == NULL)   
+    lista->primero = nodoAInsertar;
+  
+  nodoPivote->ant = nodoAInsertar;
+    
+  if (nodoPivote->ant->ant != NULL)
+    nodoPivote->ant->ant->sig = nodoAInsertar;
+}
+
+///////////////////////////
 int dlist_comparar(void* dato1, void* dato2){
   return strcmp(((DList*)dato1)->alias, ((DList*)dato2)->alias);
 }
 
 void imprimir_dlist_pantalla(DList* lista, FuncionVisitante imprimir) {
   if((lista) != NULL){
-    for (DNodo *nodo = lista->primero; nodo != NULL; nodo = nodo->sig){
-      if(nodo->sig != NULL){
-        imprimir(nodo->dato);
-        printf(",");
+    if(lista->primero == NULL)
+      printf("Ø\n");
+    else{
+      for (DNodo *nodo = lista->primero; nodo != NULL; nodo = nodo->sig){
+        if(nodo->sig != NULL){
+          imprimir(nodo->dato);
+          printf(",");
+        }
+        else
+          imprimir(nodo->dato);
       }
-      else
-        imprimir(nodo->dato);
+      printf("\n");
     }
-    printf("\n");
   }
   else
     printf("Ingrese un alias valido\n");
+  
 }
 
 void imprimir_alias(void* dato){ //DEBUG

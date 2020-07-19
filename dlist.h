@@ -48,7 +48,7 @@ DNodo* merge_sort(DNodo* primero, Compara comparar);
 
 //  Dadas una dlist y una funcion de comparacion,
 //  devuelve una dlist ordenada por merge sort mediante esa funcion.
-DList* dlist_merge_sort(DList* lista, Compara comparar);
+void dlist_merge_sort(DList* lista, Compara comparar);
 
 //  Dada una dlist, crea una copia de esta con los mismos datos
 //  y devuelve una dlist.
@@ -60,6 +60,15 @@ DList* dlist_copia(DList* lista);
 
 //  Dada una dlist, destruye los nodos de la lista sin liberar los datos de los nodos.
 void dlist_destruir_copia(DList* lista);
+
+// Dada una dlist ordenada, elimina los elementos repetidos de la lista
+void dlist_eliminar_repetidos(DList* lista, Compara comparar, FuncionVisitante liberarDato);
+
+// Dada una lista y un nodo, elimina el nodo de la lista y libera la memoria
+void eliminar_nodo(DList* lista, DNodo* nodo, FuncionVisitante liberarDato);
+
+// Mueve un elemento de la lista dada a la izquierda de un elemento pivote de la misma lista
+void mover_a_izquierda_de(DList * lista, DNodo * nodoPivote, DNodo * nodoAInsertar);
 
 // Realiza la comparacion entre los alias de dos DLists
 int dlist_comparar(void* dato1, void* dato2);
