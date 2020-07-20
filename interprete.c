@@ -58,26 +58,35 @@ DList* leerConjuntoComprension(char* alias, char* entrada){
 
 }
 
-void comando_conjunto(char* comando, char* entrada, char* alias, char caracter){
-    switch (caracter){
-        case '|':
-        //conjunto_unir();
-            printf("%s = %s | %s\n", comando, entrada, alias);
-            break;
-        case '&':
-            printf("comando = entrada & alias\n");
-            break;
-        case '-':
-            printf("comando = entrada - alias\n");
-            break;
-        default:
-            printf("Ingrese un comando valido\n");
+CTree* comando_conjunto(char* comando, char* entrada, char* alias, char caracter, CTree* tabla){
+    DList* resultado, *alias1, *alias2;
+    alias1 = (DList*)buscar_elem_tabla(entrada, tabla);
+    alias2 = (DList*)buscar_elem_tabla(alias, tabla);
+    if(alias1 == NULL || alias2 == NULL){
+        return NULL;
+    }
+    else{
+        switch (caracter){
+            case '|':
+                resultado = conjunto_unir(comando, alias1, alias2);
+                tabla = insertar_elem_tabla((void*)resultado, tabla, dlist_alias, dlist_comparar);
+                break;
+            case '&':
+                printf("comando = entrada & alias\n");
+                break;
+            case '-':
+                printf("comando = entrada - alias\n");
+                break;
+            default:
+                printf("Ingrese un comando valido\n");
+        }
+        return tabla;
     }
 }
 
 int main(){
 
-    CTree* tabla = crear_tabla();
+    CTree* tabla = crear_tabla(), *tablaBuff;
 
     int salir = 0;
     char entrada[1100], comando[1100], buffer[1100], caracter, alias[1000], alias2[1000];
@@ -86,8 +95,10 @@ int main(){
         buffer[0]='0'; // Para borrar comandos que hayan quedado en el buffer
         fgets(entrada, 1100, stdin);
         sscanf(entrada, "%s %[^\n]", comando, buffer);
-        if(strcmp(comando, "salir") == 0)
+        if(strcmp(comando, "salir") == 0){
             salir = 1;
+            liberar_tabla(tabla);
+        }
         else{
             if(strcmp(comando, "imprimir") == 0)
                 imprimir_dlist_pantalla((DList*)buscar_elem_tabla(buffer, tabla), imprimir_dato);
@@ -109,7 +120,12 @@ int main(){
                     printf("comando = complemento de (*buffer)+2\n");
                 else{
                     sscanf(buffer, "= %s %c %s", entrada, &caracter, alias);
-                    comando_conjunto(comando, entrada, alias, caracter);
+                    tablaBuff = comando_conjunto(comando, entrada, alias, caracter, tabla);
+                    if(tablaBuff != NULL)
+                        tabla = tablaBuff;
+                    else
+                        printf("No se encontró el alias buscado\n");
+                    
                 }
             }
             else

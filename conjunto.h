@@ -4,6 +4,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "dlist.h"
 
 typedef struct {
     int inicio;
@@ -15,5 +16,9 @@ void imprimir_dato(void* dato);
 int comparar_intervalo(void* dato1, void* dato2);
 
 void conjunto_eliminar(void* conjunto);
+
+void* conjunto_copia_intervalo(void* dato);
+
+DList* conjunto_unir(char* alias, DList* lista1, DList* lista2); // Cambiar lista1 y lista2 por listaXY y listaAB
 
 #endif /* __CONJUNTO_H__ */

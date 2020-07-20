@@ -10,15 +10,17 @@ DList* dlist_crear(char* alias) {
   return lista;
 }
 
-void dlist_destruir(DList* lista, FuncionVisitante liberar) {
+//void dlist_destruir(DList* lista, FuncionVisitante liberar) {
+void dlist_destruir(void* lista){
   DNodo *nodoAEliminar;
-  while (lista->primero != NULL) {
-    nodoAEliminar = lista->primero;
-    lista->primero = nodoAEliminar->sig;
-    liberar(nodoAEliminar->dato);
+  while (((DList*)lista)->primero != NULL) {
+    nodoAEliminar = ((DList*)lista)->primero;
+    ((DList*)lista)->primero = nodoAEliminar->sig;
+    //liberar(nodoAEliminar->dato);
+    free(nodoAEliminar->dato);
     free(nodoAEliminar);
   }
-  free(lista->alias);
+  free(((DList*)lista)->alias);
   free(lista);
 }
 

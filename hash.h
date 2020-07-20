@@ -21,4 +21,6 @@ void imprimir_tabla(CTree* tabla, FuncionV imprimir_alias);
 
 void* buscar_elem_tabla(char* string, CTree* tabla);
 
+void liberar_tabla(CTree* tabla);
+
 #endif /* __HASH_H__ */

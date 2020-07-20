@@ -1,6 +1,8 @@
 #include "hash.h"
 #include "dlist.h"
 #include "ctree.h"
+#include "conjunto.h"
+
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
@@ -105,5 +107,11 @@ void imprimir_tabla(CTree* tabla, FuncionV imprimir_alias){
         printf("En la posc %d hay: ", i);
         ctree_recorrer_dfs(tabla[i], imprimir_alias);
         printf("\n");
+    }
+}
+
+void liberar_tabla(CTree* tabla){
+    for(int i=0; i<TABLESIZE; i++){
+        ctree_destruir(tabla[i], dlist_destruir);
     }
 }

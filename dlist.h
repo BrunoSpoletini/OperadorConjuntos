@@ -26,7 +26,8 @@ typedef int (*Compara) (void* dato1, void* dato2);
 DList* dlist_crear(char* alias);
 
 //  Destruccion de la lista.
-void dlist_destruir(DList* lista, FuncionVisitante liberar);
+//void dlist_destruir(DList* lista, FuncionVisitante liberar);
+void dlist_destruir(void* lista);
 
 //  Agrega un elemento al final de la lista.
 DList* dlist_agregar_final(DList* lista, void *dato);

@@ -1,17 +1,14 @@
 #include "ctree.h"
 
-//#include "dlist.h" //Solo para debbug
-
 CTree ctree_crear() {
   return NULL;
 }
 
-void ctree_destruir(CTree nodo, FuncionV liberar_dlist) {
+void ctree_destruir(CTree nodo, FuncionV liberar) {
   if (nodo != NULL) {
-    ctree_destruir(nodo->izq, liberar_dlist);
-    ctree_destruir(nodo->der, liberar_dlist);
-    liberar_dlist(nodo->dato);
-    //free(nodo->dato); checkear si esto hace falta o no
+    ctree_destruir(nodo->izq, liberar);
+    ctree_destruir(nodo->der, liberar);
+    liberar(nodo->dato);
     free(nodo);
   }
 }
