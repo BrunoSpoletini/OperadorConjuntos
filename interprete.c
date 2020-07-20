@@ -99,6 +99,7 @@ int main(){
         sscanf(entrada, "%s %[^\n]", comando, buffer);
         if(strcmp(comando, "salir") == 0){
             salir = 1;
+            imprimir_tabla(tabla, imprimir_alias);
             liberar_tabla(tabla);
         }
         else{

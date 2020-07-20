@@ -154,7 +154,7 @@ void* ctree_buscar(char* dato, CTree nodo, FuncionComparacion comparar, FuncionO
     return NULL;
   else if(comparar(dato, obtener_dato(nodo->dato)) == 0)
     return nodo->dato;
-  else if(comparar(dato, obtener_dato(nodo->dato)) < 0)
+  else if(comparar(dato, obtener_dato(nodo->dato)) > 0)
     ctree_buscar(dato, nodo->izq, comparar, obtener_dato);
   else
     ctree_buscar(dato, nodo->der, comparar, obtener_dato);
