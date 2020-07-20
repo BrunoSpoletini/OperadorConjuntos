@@ -100,26 +100,34 @@ void conjunto_unificar_intervalos(DList* lista){
 DList* conjunto_complemento(char* alias, DList* lista){
     DList* resultado = dlist_crear(alias);
     ElemConj* intervalo;
-    if(obt_inicio(lista->primero) != INT_MIN){
+    if(lista->primero == NULL){
         intervalo = malloc(sizeof(ElemConj));
         intervalo->inicio = INT_MIN;
-        intervalo->extremo = obt_inicio(lista->primero) - 1;
-        resultado = dlist_agregar_final(resultado, intervalo);
-    }
-    for(DNodo* nodo = lista->primero; nodo != NULL; nodo = nodo->sig){
-        if(nodo->sig != NULL){
-            intervalo = malloc(sizeof(ElemConj));
-            intervalo->inicio = obt_extremo(nodo) + 1;
-            intervalo->extremo = obt_inicio(nodo->sig) - 1;
-            resultado = dlist_agregar_final(resultado, intervalo);
-        }
-    }
-
-    if(obt_extremo(lista->ultimo) != INT_MAX){
-        intervalo = malloc(sizeof(ElemConj));
-        intervalo->inicio = obt_extremo(lista->ultimo) + 1;
         intervalo->extremo = INT_MAX;
         resultado = dlist_agregar_final(resultado, intervalo);
+    }
+    else{
+        if(obt_inicio(lista->primero) != INT_MIN){
+            intervalo = malloc(sizeof(ElemConj));
+            intervalo->inicio = INT_MIN;
+            intervalo->extremo = obt_inicio(lista->primero) - 1;
+            resultado = dlist_agregar_final(resultado, intervalo);
+        }
+        for(DNodo* nodo = lista->primero; nodo != NULL; nodo = nodo->sig){
+            if(nodo->sig != NULL){
+                intervalo = malloc(sizeof(ElemConj));
+                intervalo->inicio = obt_extremo(nodo) + 1;
+                intervalo->extremo = obt_inicio(nodo->sig) - 1;
+                resultado = dlist_agregar_final(resultado, intervalo);
+            }
+        }
+
+        if(obt_extremo(lista->ultimo) != INT_MAX){
+            intervalo = malloc(sizeof(ElemConj));
+            intervalo->inicio = obt_extremo(lista->ultimo) + 1;
+            intervalo->extremo = INT_MAX;
+            resultado = dlist_agregar_final(resultado, intervalo);
+        }
     }
     return resultado;
 }
