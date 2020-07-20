@@ -29,7 +29,7 @@ CTree CTree_crear();
 void ctree_destruir(CTree nodo, FuncionV liberar);
 
 // Inserta un intervalo en un arbol de intervalos.
-CTree ctree_insertar(CTree raiz, void* dato, FuncionComparacion comparar);
+CTree ctree_insertar(CTree raiz, void* dato, FuncionComparacion comparar, FuncionV liberar);
 
 // Elimina un intervalo de un arbol de intervalos.
 CTree ctree_eliminar(CTree raiz, void* dato);

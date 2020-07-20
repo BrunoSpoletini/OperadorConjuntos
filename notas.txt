@@ -21,7 +21,9 @@ https://www.smartick.es/blog/matematicas/numeros/numeros-primos-criba-eratostene
 
 
 errores a corregir:
-liberar el espacio de memoria del dato anterior cuando reasignas un valor a un alias
+checkear que los numeros que ingrese no se vayan del rango del int
+arreglar los cortes que tira el complemento (cuando hay un solo elemento, y cuando no hay ninguno)
+Problemas con el hasheo con minusculas
 
 A2 = {4,6}
 B = {-8}
@@ -34,9 +36,9 @@ A = A | A1
 A = A & A1
 A = A - A1
 
-A = {1}
+A = {1,}
 B = {-7}
-C = A | B
+C = A & B
 imprimir C
 
 
@@ -49,4 +51,42 @@ A = {x : 18 <= x <= 105}
 D = {1,2,3,4,5,6,7,8,9}
 C = A | B
 C = C | D
+A = ~C
+imprimir A
+
+
+[a  {x  b]  y}
+
+A = {x : 0 <= x <= 10}
+B = {x : 5 <= x <= 15}
+D = {16}
+C = A | B
+C = C | D
+
+
+
+A = {1,2,3,4,5}
+B = {3,4,5,6,7,8,9}
+C = A & B
 imprimir C
+
+A = {-5,-4,-3,-2,-1,0,4,5,6,7,8,9,10}
+B = {-5,-6,-7,-8,-9,0,1,2,6,7,8,9,10}
+C = A | B
+imprimir C
+
+A = {1,2}
+B = {2,3}
+B = ~B
+A = ~A
+C = A | B
+C = ~C
+imprimir C
+
+A = {x : 1 <= x <= 5}
+C = A | B
+C = C | D
+C = A &
+
+A = {1,2,3,4,5}
+A = ~A

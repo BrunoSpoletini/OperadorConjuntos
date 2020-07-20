@@ -97,8 +97,7 @@ void dlist_merge_sort(DList* lista, Compara comparar) {
 
   lista->primero = nodo;
 
-  for (;nodo->sig != NULL;nodo = nodo->sig) //Este for tiene como funcion encontrar el final de la lista
-
+  for (;nodo != NULL; nodo = nodo->sig) //Este for tiene como funcion encontrar el final de la lista
   lista->ultimo = nodo;
   }
 }
@@ -135,7 +134,6 @@ void dlist_eliminar_repetidos(DList* lista, Compara comparar, FuncionVisitante l
   //return lista; //Probar si se puede hacer tipo void
 }
 
-
 void eliminar_nodo(DList* lista, DNodo* nodo, FuncionVisitante liberarDato){
   if(nodo->ant == NULL)
     lista->primero = nodo->sig;
@@ -145,6 +143,7 @@ void eliminar_nodo(DList* lista, DNodo* nodo, FuncionVisitante liberarDato){
     lista->ultimo = nodo->ant;
   else
     nodo->sig->ant = nodo->ant;
+
   liberarDato(nodo->dato); //Hecho así para mantener la generalidad
   free(nodo);
 }

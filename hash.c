@@ -93,7 +93,7 @@ CTree* almacenar_dato(DList* dato, CTree* tabla){
 
 CTree* insertar_elem_tabla(void* dato, CTree* tabla, FuncionObtencion obtenerCadena, FuncionComparacion dlist_comparar){
     int hash = hash_string(obtenerCadena(dato));
-    tabla[hash] = ctree_insertar(tabla[hash], (void*)dato, dlist_comparar);
+    tabla[hash] = ctree_insertar(tabla[hash], (void*)dato, dlist_comparar, dlist_destruir);
     return tabla;
 }
 

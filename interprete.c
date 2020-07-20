@@ -30,8 +30,10 @@ DList* leerConjuntoExtension(char* alias, char* buffer){
             i++;
         }
     }
+    
     dlist_merge_sort(lista, comparar_enteros);
     dlist_eliminar_repetidos(lista, comparar_intervalo, conjunto_eliminar);
+    conjunto_unificar_intervalos(lista);
     return lista;
 }
 
@@ -69,10 +71,12 @@ CTree* comando_conjunto(char* comando, char* entrada, char* alias, char caracter
         switch (caracter){
             case '|':
                 resultado = conjunto_unir(comando, alias1, alias2);
+                conjunto_unificar_intervalos(resultado);
                 tabla = insertar_elem_tabla((void*)resultado, tabla, dlist_alias, dlist_comparar);
                 break;
             case '&':
-                printf("comando = entrada & alias\n");
+                resultado = conjunto_interseccion(comando, alias1, alias2);
+                tabla = insertar_elem_tabla((void*)resultado, tabla, dlist_alias, dlist_comparar);
                 break;
             case '-':
                 printf("comando = entrada - alias\n");
@@ -85,9 +89,7 @@ CTree* comando_conjunto(char* comando, char* entrada, char* alias, char caracter
 }
 
 int main(){
-
     CTree* tabla = crear_tabla(), *tablaBuff;
-
     int salir = 0;
     char entrada[1100], comando[1100], buffer[1100], caracter, alias[1000], alias2[1000];
     DList *lista = NULL;
@@ -116,8 +118,13 @@ int main(){
                             tabla = insertar_elem_tabla((void*)lista, tabla, dlist_alias, dlist_comparar);
                     }
                 }
-                else if(buffer[2] == '~')
-                    printf("comando = complemento de (*buffer)+2\n");
+                else if(buffer[2] == '~'){
+                    lista = (DList*)buscar_elem_tabla(buffer+3, tabla);
+                    if(lista != NULL)
+                        tabla = insertar_elem_tabla((void*)conjunto_complemento(comando, lista), tabla, dlist_alias, dlist_comparar);
+                    else
+                        printf("No se encontró el alias buscado\n");
+                }
                 else{
                     sscanf(buffer, "= %s %c %s", entrada, &caracter, alias);
                     tablaBuff = comando_conjunto(comando, entrada, alias, caracter, tabla);
@@ -125,7 +132,6 @@ int main(){
                         tabla = tablaBuff;
                     else
                         printf("No se encontró el alias buscado\n");
-                    
                 }
             }
             else

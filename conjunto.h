@@ -21,4 +21,11 @@ void* conjunto_copia_intervalo(void* dato);
 
 DList* conjunto_unir(char* alias, DList* lista1, DList* lista2);
 
+void conjunto_unificar_intervalos(DList* lista);
+
+DList* conjunto_complemento(char* alias, DList* lista);
+
+DList* conjunto_interseccion(char* alias, DList* lista1, DList* lista2);
+
+
 #endif /* __CONJUNTO_H__ */

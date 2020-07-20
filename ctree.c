@@ -78,16 +78,18 @@ CTree balancear(CTree nodo) {
 }
 
 
-CTree ctree_insertar(CTree nodo, void* dato, FuncionComparacion comparar) {
+CTree ctree_insertar(CTree nodo, void* dato, FuncionComparacion comparar, FuncionV liberar) {
   if (nodo == NULL)
     nodo = llenar_nodo(dato);
   else {
-    if(comparar(nodo->dato, dato) == 0)
-      nodo->dato = dato; //Aca hay que liberar el dato viejo antes de pisarlo
+    if(comparar(nodo->dato, dato) == 0){
+      liberar(nodo->dato);
+      nodo->dato = dato;
+    }
     else if(comparar(nodo->dato, dato) < 0)
-      nodo->izq = ctree_insertar(nodo->izq, dato, comparar);
+      nodo->izq = ctree_insertar(nodo->izq, dato, comparar, liberar);
     else
-      nodo->der = ctree_insertar(nodo->der, dato, comparar);
+      nodo->der = ctree_insertar(nodo->der, dato, comparar, liberar);
 
     actualizar_altura(nodo);
     nodo = balancear(nodo);
