@@ -26,38 +26,35 @@ void* conjunto_copia_intervalo(void* dato){
     return (void*)copia;
 }
 
+void* agregar_intervalo(DNodo** nodo, DList** resultado){
+    void* intervalo;
+    intervalo = conjunto_copia_intervalo((*nodo)->dato);
+    *resultado = dlist_agregar_final(*resultado, intervalo);
+    *nodo = (*nodo)->sig;
+}
+
 DList* conjunto_unir(char* alias, DList* lista1, DList* lista2){
     DList* resultado = dlist_crear(alias);
-    void* intervalo;
     ElemConj* nuevoIntervalo;
-    DNodo* nodo1 = lista1->primero;
-    DNodo* nodo2 = lista2->primero;
+    DNodo* nodoAB = lista1->primero;
+    DNodo* nodoXY = lista2->primero;
     int a, b, x, y;
-    while(nodo1 != NULL && nodo2 != NULL){
-        a = ((ElemConj*)(nodo1->dato))->inicio;
-        b = ((ElemConj*)(nodo1->dato))->extremo;
-        x = ((ElemConj*)(nodo2->dato))->inicio;
-        y = ((ElemConj*)(nodo2->dato))->extremo;
+    while(nodoAB != NULL && nodoXY != NULL){
+        a = ((ElemConj*)(nodoAB->dato))->inicio;
+        b = ((ElemConj*)(nodoAB->dato))->extremo;
+        x = ((ElemConj*)(nodoXY->dato))->inicio;
+        y = ((ElemConj*)(nodoXY->dato))->extremo;
         if(a < x && b < x){ // [a b] {x y}
-            intervalo = conjunto_copia_intervalo(nodo1->dato);
-            resultado = dlist_agregar_final(resultado, intervalo);
-            nodo1 = nodo1->sig;
+            agregar_intervalo(&nodoAB, &resultado);
         }
         else if(x < a && y < a){ // {x  y} [a  b]
-            intervalo = conjunto_copia_intervalo(nodo2->dato);
-            resultado = dlist_agregar_final(resultado, intervalo);
-            nodo2 = nodo2->sig;
+            agregar_intervalo(&nodoXY, &resultado);
         }
         else if((a <= x && b >= y) || (x <= a && y >= b)){
             if(a <= x) // [a  {x y}  b]
-                nodo2 = nodo2->sig;
-                //intervalo = conjunto_copia_intervalo(nodo1->dato);
+                nodoXY = nodoXY->sig;
             else // {x  [a   b]  y}
-                nodo1 = nodo1->sig;
-                //intervalo = conjunto_copia_intervalo(nodo2->dato);
-            //resultado = dlist_agregar_final(resultado, intervalo);
-            //nodo1 = nodo1->sig;
-            //nodo2 = nodo2->sig;
+                nodoAB = nodoAB->sig;
         }
         else if((a <= x && b >= x) || (x <= a && y >= a)){
             nuevoIntervalo = malloc(sizeof(ElemConj));
@@ -70,21 +67,16 @@ DList* conjunto_unir(char* alias, DList* lista1, DList* lista2){
                 nuevoIntervalo->extremo = b;
             }
             resultado = dlist_agregar_final(resultado, (void*)nuevoIntervalo);
-            nodo1 = nodo1->sig;
-            nodo2 = nodo2->sig;
+            nodoAB = nodoAB->sig;
+            nodoXY = nodoXY->sig;
         }
     }
     //En este punto, solo una de las listas quedará con elementos
-    while(nodo1 != NULL){
-        intervalo = conjunto_copia_intervalo(nodo1->dato);
-        resultado = dlist_agregar_final(resultado, intervalo);
-        nodo1 = nodo1->sig;
+    while(nodoAB != NULL){
+        agregar_intervalo(&nodoAB, &resultado);
     }
-    while(nodo2 != NULL){
-        intervalo = conjunto_copia_intervalo(nodo2->dato);
-        resultado = dlist_agregar_final(resultado, intervalo);
-        nodo2 = nodo2->sig;
+    while(nodoXY != NULL){
+        agregar_intervalo(&nodoXY, &resultado);
     }
-    
     return resultado;
 }

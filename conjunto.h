@@ -19,6 +19,6 @@ void conjunto_eliminar(void* conjunto);
 
 void* conjunto_copia_intervalo(void* dato);
 
-DList* conjunto_unir(char* alias, DList* lista1, DList* lista2); // Cambiar lista1 y lista2 por listaXY y listaAB
+DList* conjunto_unir(char* alias, DList* lista1, DList* lista2);
 
 #endif /* __CONJUNTO_H__ */
