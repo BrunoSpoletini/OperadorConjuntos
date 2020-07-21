@@ -92,6 +92,7 @@ int main(){
     CTree* tabla = crear_tabla(), *tablaBuff;
     int salir = 0;
     char entrada[1100], comando[1100], buffer[1100], caracter, alias[1000], alias2[1000];
+    //char primerTerm[1100], segundoTerm[1100], tercerTerm[1100], buffer[1100];
     DList *lista = NULL;
     while(salir == 0){
         buffer[0]='0'; // Para borrar comandos que hayan quedado en el buffer
