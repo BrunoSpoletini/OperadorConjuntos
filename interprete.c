@@ -84,7 +84,8 @@ CTree* comando_conjunto(char* comando, char* entrada, char* alias, char caracter
                 tabla = insertar_elem_tabla((void*)resultado, tabla, dlist_alias, dlist_comparar);
                 break;
             case '-':
-                printf("comando = entrada - alias\n");
+                resultado = conjunto_resta(comando, alias1, alias2);
+                tabla = insertar_elem_tabla((void*)resultado, tabla, dlist_alias, dlist_comparar);
                 break;
             default:
                 printf("Ingrese un comando valido\n");

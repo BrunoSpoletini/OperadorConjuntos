@@ -27,5 +27,6 @@ DList* conjunto_complemento(char* alias, DList* lista);
 
 DList* conjunto_interseccion(char* alias, DList* lista1, DList* lista2);
 
+DList* conjunto_resta(char* alias, DList* lista1, DList* lista2);
 
 #endif /* __CONJUNTO_H__ */

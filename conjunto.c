@@ -127,3 +127,11 @@ DList* conjunto_interseccion(char* alias, DList* lista1, DList* lista2){
     dlist_destruir(aux3);
     return aux1;
 }
+
+DList* conjunto_resta(char* alias, DList* lista1, DList* lista2){
+    DList* aux, *resultado;
+    aux = conjunto_complemento(alias, lista2);
+    resultado = conjunto_interseccion(alias, lista1, aux);
+    dlist_destruir(aux);
+    return resultado;
+}
