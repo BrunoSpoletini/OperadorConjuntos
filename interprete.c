@@ -17,7 +17,7 @@ int comparar_enteros(void* num1, void* num2){
 DList* leerConjuntoExtension(char* alias, char* buffer){
     int i=0;
     DList *lista= dlist_crear(alias);
-    char *buf = &buffer[0]; // Intentar hacer esto directamente con buffer
+    char *buf = &buffer[0] + 3; // Intentar hacer esto directamente con buffer
     while(buf[i] != '}'){
         if((48 <= buf[i] && buf[i] <= 57) || buf[i] == '-'){
             ElemConj *elem = malloc(sizeof(int)*2);
@@ -27,7 +27,13 @@ DList* leerConjuntoExtension(char* alias, char* buffer){
             i=0;
         }
         else{
-            i++;
+            if(buf[i] == ',' || buf[i] == ' ')
+                i++;
+            else{
+                dlist_destruir(lista);
+                printf("Ingrese un comando valido\n");
+                return NULL;
+            }
         }
     }
     
@@ -107,7 +113,8 @@ int main(){
                 if(buffer[2] == '{' && buffer[strlen(buffer)-1] == '}'){
                     if((48 <= buffer[3] && buffer[3] <= 57) || buffer[3] == '-' || buffer[3]=='}'){
                         lista = leerConjuntoExtension(primerTerm, buffer);
-                        tabla = insertar_elem_tabla((void*)lista, tabla, dlist_alias, dlist_comparar);
+                        if(lista != NULL)
+                            tabla = insertar_elem_tabla((void*)lista, tabla, dlist_alias, dlist_comparar);
                     }
                     else{
                         lista = leerConjuntoComprension(primerTerm, buffer);
