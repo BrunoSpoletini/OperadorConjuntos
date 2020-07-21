@@ -44,41 +44,6 @@ void checkHashFunction(){
     printf("El porcentaje de colisiones es: %d%%\n",(sum*100)/i); 
 }
 
-
-/*/
-DNodo* dnodo_crear(DList* conjunto){
-    DNodo* lista = malloc(sizeof(DNodo));
-    lista->ant = NULL;
-    lista->sig = NULL;
-    lista->dato = conjunto;
-    return lista;
-}
-
-void dnodo_agregar_siguiente(DList* conjunto, DNodo* iterador){
-    DNodo* nuevoNodo = malloc(sizeof(DNodo));
-    iterador->sig = nuevoNodo;
-    nuevoNodo->ant = iterador;
-    nuevoNodo->sig = NULL;
-    nuevoNodo->dato = conjunto;
-}
-
-DNodo** almacenar_dato(DList* conjunto, DNodo** tabla){
-    int hash = hash_string(conjunto->alias);
-    DNodo* iterador;
-    if(tabla[hash] == NULL){
-        tabla[hash] = dnodo_crear(conjunto);
-    }
-    else{
-         for(iterador = tabla[hash];(strcmp(((DList*)iterador->dato)->alias, conjunto->alias) == 0) && ((iterador->sig)!=NULL); iterador = iterador->sig){}
-            if(strcmp(((DList*)iterador->dato)->alias, conjunto->alias) == 0)
-                iterador->dato = conjunto;
-            else  if(iterador->sig == NULL)
-               dnodo_agregar_siguiente(conjunto, iterador); //CAMBIAR TODO ESTO POR ARBOLES :(
-            
-    }
-    return tabla;
-}/*/
-
 CTree* crear_tabla(){
     CTree* tabla = malloc(sizeof(CTree)*TABLESIZE);
     for(int i=0; i < TABLESIZE; i++){
@@ -86,10 +51,6 @@ CTree* crear_tabla(){
     }
     return tabla;
 }
-/*/
-CTree* almacenar_dato(DList* dato, CTree* tabla){
-    return ctree_insertar(tabla, dato); //Claramente esto no es necesario
-}/*/
 
 CTree* insertar_elem_tabla(void* dato, CTree* tabla, FuncionObtencion obtenerCadena, FuncionComparacion dlist_comparar){
     int hash = hash_string(obtenerCadena(dato));
@@ -102,11 +63,11 @@ void* buscar_elem_tabla(char* string, CTree* tabla){
     return ctree_buscar(string, tabla[hash], comparar_alias, dlist_alias);
 }
 
-void imprimir_tabla(CTree* tabla, FuncionV imprimir_alias){
+void imprimir_tabla(CTree* tabla, FuncionV imprimir_alias){ //debuug
     for(int i=0; i<TABLESIZE; i++){
-        printf("En la posc %d hay: ", i);
-        ctree_recorrer_dfs(tabla[i], imprimir_alias);
-        printf("\n");
+        printf("En la posc %d hay: %d elementos \n", i,aaa(tabla[i]));
+        //ctree_recorrer_dfs(tabla[i], imprimir_alias);
+        
     }
 }
 

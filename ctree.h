@@ -66,5 +66,8 @@ void imprimir_intervalo(CTree nodo);
 // Devuelve un puntero al dato buscado dentro del arbol dado
 void* ctree_buscar(char* dato, CTree nodo, FuncionComparacion comparar, FuncionObtencion obtener_dato);
 
+
+int aaa(CTree nodo); //debb
+
 #endif /* __ITREE_H__ */
 

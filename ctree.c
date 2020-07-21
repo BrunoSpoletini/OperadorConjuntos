@@ -160,3 +160,11 @@ void* ctree_buscar(char* dato, CTree nodo, FuncionComparacion comparar, FuncionO
     ctree_buscar(dato, nodo->der, comparar, obtener_dato);
 }
 
+// DEBUGG
+
+int aaa(CTree nodo){
+  if (nodo != NULL) {
+    return aaa(nodo->izq) + aaa(nodo->der) + 1;
+  }
+  return 0;
+}
