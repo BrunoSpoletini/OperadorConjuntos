@@ -20,8 +20,17 @@ https://cp-algorithms.com/string/string-hashing.html
 https://www.smartick.es/blog/matematicas/numeros/numeros-primos-criba-eratostenes/#:~:text=Podemos%20determinar%20entonces%20que%20los,%2C%2083%2C%2089%20y%2097.
 
 
-errores a corregir:
+Cosas por hacer
 checkear que los numeros que ingrese no se vayan del rango del int?
+hacer agregart al final tipo void
+hacer los comentarios de los prototipos de las funciones
+correr el programa con valgrid
+borrar comentarios de las funciones
+borrar funciones de testeo
+hacer informe
+
+valgrind --leak-check=yes myprog arg1 arg2
+
 
 a = {1,2,3,4}
 b = {2,4,5,6}
@@ -44,11 +53,20 @@ D = {1,2,3,4,5,6,7,8,9}
 C = A | B
 C = C | D
 A = ~C
+
+
 A = {x : 0 <= x <= 10}
 B = {x : 5 <= x <= 15}
-D = {16}
+D = {10}
 C = A | B
-C = C | D
+C = C & D
+D = A - B
+C = ~C
+imprimir C
+A 067
+B = A & J
+
+
 A = {1,2,3,4,5}
 B = {3,4,5,6,7,8,9}
 C = A & B

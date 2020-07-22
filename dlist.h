@@ -26,14 +26,13 @@ typedef int (*Compara) (void* dato1, void* dato2);
 DList* dlist_crear(char* alias);
 
 //  Destruccion de la lista.
-//void dlist_destruir(DList* lista, FuncionVisitante liberar);
 void dlist_destruir(void* lista);
 
 //  Agrega un elemento al final de la lista.
 DList* dlist_agregar_final(DList* lista, void *dato);
 
 //  Dados un dlist, imprime los valores por pantalla
-void imprimir_dlist_pantalla(DList* lista, FuncionVisitante imprimir); //CORREGIR
+void imprimir_dlist_pantalla(DList* lista, FuncionVisitante imprimir);
 
 //  Dado el primer nodo de la lista, devuelve el nodo de la mitad de la lista,
 //  y corta su ruta al anterior, dividiendo la lista en 2 partes.
@@ -51,25 +50,11 @@ DNodo* merge_sort(DNodo* primero, Compara comparar);
 //  devuelve una dlist ordenada por merge sort mediante esa funcion.
 void dlist_merge_sort(DList* lista, Compara comparar);
 
-//  Dada una dlist, crea una copia de esta con los mismos datos
-//  y devuelve una dlist.
-DList* dlist_copia(DList* lista);
-
-//  Dada una dlist, crea una copia de esta con los mismos datos
-//  y devuelve una dlist.
-DList* dlist_copia(DList* lista);
-
-//  Dada una dlist, destruye los nodos de la lista sin liberar los datos de los nodos.
-void dlist_destruir_copia(DList* lista);
-
 // Dada una dlist ordenada, elimina los elementos repetidos de la lista
 void dlist_eliminar_repetidos(DList* lista, Compara comparar, FuncionVisitante liberarDato);
 
 // Dada una lista y un nodo, elimina el nodo de la lista y libera la memoria
 void eliminar_nodo(DList* lista, DNodo* nodo, FuncionVisitante liberarDato);
-
-// Mueve un elemento de la lista dada a la izquierda de un elemento pivote de la misma lista
-void mover_a_izquierda_de(DList * lista, DNodo * nodoPivote, DNodo * nodoAInsertar);
 
 // Realiza la comparacion entre los alias de dos DLists
 int dlist_comparar(void* dato1, void* dato2);

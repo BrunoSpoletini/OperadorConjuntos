@@ -5,18 +5,16 @@ DList* dlist_crear(char* alias) {
   DList *lista = malloc(sizeof(DList));
   lista->primero = NULL;
   lista->ultimo = NULL;
-  lista->alias = malloc(sizeof(char)*strlen(alias));
+  lista->alias = malloc(sizeof(char)*(strlen(alias)+1));
   strcpy(lista->alias, alias); 
   return lista;
 }
 
-//void dlist_destruir(DList* lista, FuncionVisitante liberar) {
 void dlist_destruir(void* lista){
   DNodo *nodoAEliminar;
   while (((DList*)lista)->primero != NULL) {
     nodoAEliminar = ((DList*)lista)->primero;
     ((DList*)lista)->primero = nodoAEliminar->sig;
-    //liberar(nodoAEliminar->dato);
     free(nodoAEliminar->dato);
     free(nodoAEliminar);
   }
@@ -97,30 +95,9 @@ void dlist_merge_sort(DList* lista, Compara comparar) {
 
   lista->primero = nodo;
 
-  for (;nodo != NULL; nodo = nodo->sig) //Este for tiene como funcion encontrar el final de la lista
+  for (;nodo != NULL; nodo = nodo->sig)
   lista->ultimo = nodo;
   }
-}
-
-DList* dlist_copia(DList* lista) { //Esto probablemente no sirva
-  DList* copiaLista = dlist_crear(lista->alias);
-
-  for (DNodo *nodo = lista->primero; nodo != NULL; nodo = nodo->sig) {
-    dlist_agregar_final(copiaLista, nodo->dato);
-  }
-
-  return copiaLista;
-}
-
-void dlist_destruir_copia(DList* lista) { //Esto probablemente no sirva
-  DNodo *nodoAEliminar;
-
-  while (lista->primero != NULL) {
-    nodoAEliminar = lista->primero;
-    lista->primero = nodoAEliminar->sig;
-    free(nodoAEliminar);
-  }
-  free(lista);
 }
 
 void dlist_eliminar_repetidos(DList* lista, Compara comparar, FuncionVisitante liberarDato){
@@ -131,7 +108,6 @@ void dlist_eliminar_repetidos(DList* lista, Compara comparar, FuncionVisitante l
     }
     nodo = nodo->sig;
   }
-  //return lista; //Probar si se puede hacer tipo void
 }
 
 void eliminar_nodo(DList* lista, DNodo* nodo, FuncionVisitante liberarDato){
@@ -148,31 +124,6 @@ void eliminar_nodo(DList* lista, DNodo* nodo, FuncionVisitante liberarDato){
   free(nodo);
 }
 
- //////////////////////////////
-void mover_a_izquierda_de(DList * lista, DNodo * nodoPivote,
-                             DNodo * nodoAInsertar) {
-  if (nodoAInsertar->ant != NULL)  
-    (nodoAInsertar->ant)->sig = nodoAInsertar->sig;
-  
-  if (nodoAInsertar->sig != NULL) 
-    (nodoAInsertar->sig)->ant = nodoAInsertar->ant;
-  else 
-    lista->ultimo = nodoAInsertar->ant;
-    
-  nodoAInsertar->sig = nodoPivote;
-    
-  nodoAInsertar->ant = nodoPivote->ant;
-    
-  if (nodoPivote->ant == NULL)   
-    lista->primero = nodoAInsertar;
-  
-  nodoPivote->ant = nodoAInsertar;
-    
-  if (nodoPivote->ant->ant != NULL)
-    nodoPivote->ant->ant->sig = nodoAInsertar;
-}
-
-///////////////////////////
 int dlist_comparar(void* dato1, void* dato2){
   return strcmp(((DList*)dato1)->alias, ((DList*)dato2)->alias);
 }

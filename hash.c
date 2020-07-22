@@ -75,4 +75,5 @@ void liberar_tabla(CTree* tabla){
     for(int i=0; i<TABLESIZE; i++){
         ctree_destruir(tabla[i], dlist_destruir);
     }
+    free(tabla);
 }

@@ -41,6 +41,12 @@ CTree ctree_intersecar(CTree raiz, void* dato);
 // Recorrido primero en profundidad del arbol de intervalos.
 void ctree_recorrer_dfs(CTree raiz, FuncionV func);
 
+// Recibe un nodo e imprime el intervalo que este contiene.
+void imprimir_intervalo(CTree nodo);
+
+// Devuelve un puntero al dato buscado dentro del arbol dado
+void* ctree_buscar(char* dato, CTree nodo, FuncionComparacion comparar, FuncionObtencion obtener_dato);
+
 //----------Funciones auxiliares------------//
 // Devuelve la altura de un nodo, o -1 en caso de que reciba NULL.
 int altura(CTree nodo);
@@ -59,12 +65,6 @@ CTree rotar_der(CTree nodoPadre);
 
 // Recibe un nodo, y corrige el desbalance de las ramas.
 CTree balancear(CTree nodo);
-
-// Recibe un nodo e imprime el intervalo que este contiene.
-void imprimir_intervalo(CTree nodo);
-
-// Devuelve un puntero al dato buscado dentro del arbol dado
-void* ctree_buscar(char* dato, CTree nodo, FuncionComparacion comparar, FuncionObtencion obtener_dato);
 
 
 int aaa(CTree nodo); //debb
