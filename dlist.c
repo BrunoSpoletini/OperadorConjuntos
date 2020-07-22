@@ -22,7 +22,7 @@ void dlist_destruir(void* lista){
   free(lista);
 }
 
-DList* dlist_agregar_final(DList* lista, void* dato) {
+void dlist_agregar_final(DList* lista, void* dato) {
   DNodo *nuevoNodo = malloc(sizeof(DNodo));
   nuevoNodo->dato = dato;
   nuevoNodo->sig = NULL;
@@ -36,7 +36,6 @@ DList* dlist_agregar_final(DList* lista, void* dato) {
   }
   lista->ultimo = nuevoNodo;
 
-  return lista;
 }
 
 DNodo* dividir_lista(DNodo* primero) { 

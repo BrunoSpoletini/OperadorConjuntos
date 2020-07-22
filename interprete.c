@@ -23,7 +23,7 @@ DList* leerConjuntoExtension(char* alias, char* buffer){
             ElemConj *elem = malloc(sizeof(int)*2);
             elem->inicio = (int)strtol(buf+i, &buf ,10);
             elem->extremo = elem->inicio;
-            lista = dlist_agregar_final(lista, (void*)elem);
+            dlist_agregar_final(lista, elem);
             i=0;
         }
         else{
@@ -54,7 +54,7 @@ DList* leerConjuntoComprension(char* alias, char* entrada){
             free(elem);
         }
         else{
-            lista = dlist_agregar_final(lista, (void*) elem);
+            dlist_agregar_final(lista, elem);
         }
         return lista;
     }

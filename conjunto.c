@@ -40,7 +40,7 @@ DList* agregar_intervalo(DList* lista, int inicio, int extremo){
     ElemConj* intervalo = malloc(sizeof(ElemConj));
     intervalo->inicio = inicio;
     intervalo->extremo = extremo;
-    lista = dlist_agregar_final(lista, intervalo);
+    dlist_agregar_final(lista, intervalo);
     return lista;
 }
 

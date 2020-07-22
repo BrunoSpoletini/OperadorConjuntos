@@ -22,7 +22,6 @@ https://www.smartick.es/blog/matematicas/numeros/numeros-primos-criba-eratostene
 
 Cosas por hacer
 checkear que los numeros que ingrese no se vayan del rango del int?
-hacer agregart al final tipo void
 hacer los comentarios de los prototipos de las funciones
 correr el programa con valgrid
 borrar comentarios de las funciones
@@ -91,3 +90,15 @@ C = A &
 
 A = {1,2,3,4,5}
 A = ~A
+
+
+
+A = {x : -2 <= x <= 5}
+imprimir A
+-2:5
+B = {-10,4,6,-7}
+imprimir A
+-10,-7,4,6
+C = A | B
+imprimir C
+-10,-7,-2:5,6

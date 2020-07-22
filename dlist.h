@@ -29,7 +29,7 @@ DList* dlist_crear(char* alias);
 void dlist_destruir(void* lista);
 
 //  Agrega un elemento al final de la lista.
-DList* dlist_agregar_final(DList* lista, void *dato);
+void dlist_agregar_final(DList* lista, void *dato);
 
 //  Dados un dlist, imprime los valores por pantalla
 void imprimir_dlist_pantalla(DList* lista, FuncionVisitante imprimir);
