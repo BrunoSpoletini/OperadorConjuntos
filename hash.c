@@ -19,31 +19,6 @@ int hash_string(char* value){
     return (int)key;
 }
 
-int hash2(char* value){
-    unsigned key = 0;
-    for(int i=0; value[i] != '\0'; ++i){
-        key = value[i] + ((2 * key) % TABLESIZE);
-    }
-    return key % TABLESIZE; 
-}
-
-void checkHashFunction(){
-    int i, sum=0, array[TABLESIZE+1];
-    char line[100];
-    FILE* fp = fopen("text.txt", "r");
-    for(i = 0; i<TABLESIZE; i++){array[i]=0;}
-    for (i = 0; (fscanf(fp, "%[^\n]\n", line) != EOF); ++i) {
-        if(array[hash2(line)] == 0){
-            array[hash2(line)] = 1;
-        }
-        else{
-            sum += 1;
-        }
-    }
-    fclose(fp);
-    printf("El porcentaje de colisiones es: %d%%\n",(sum*100)/i); 
-}
-
 CTree* crear_tabla(){
     CTree* tabla = malloc(sizeof(CTree)*TABLESIZE);
     for(int i=0; i < TABLESIZE; i++){
@@ -52,10 +27,19 @@ CTree* crear_tabla(){
     return tabla;
 }
 
-CTree* insertar_elem_tabla(void* dato, CTree* tabla, FuncionObtencion obtenerCadena, FuncionComparacion dlist_comparar){
+void mensaje_error(int num){
+    if(num == 1)
+        printf("Ingrese un comando valido\n");
+    else
+        printf("No se encontró el alias buscado\n");
+}
+
+void insertar_elem_tabla(void* dato, CTree* tabla, FuncionObtencion obtenerCadena, FuncionComparacion dlistComparar, int codigoError){
     int hash = hash_string(obtenerCadena(dato));
-    tabla[hash] = ctree_insertar(tabla[hash], (void*)dato, dlist_comparar, dlist_destruir);
-    return tabla;
+    if(dato != NULL)
+        tabla[hash] = ctree_insertar(tabla[hash], dato, dlistComparar, dlist_destruir);
+    else
+        mensaje_error(codigoError);
 }
 
 void* buscar_elem_tabla(char* string, CTree* tabla){

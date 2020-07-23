@@ -106,39 +106,6 @@ CTree buscar_sucesor(CTree nodo) {
 
   return aux;
 }
-/*
-CTree ctree_eliminar(CTree nodo, void* dato) {
-  if (nodo == NULL)
-    return nodo;
-
-  if (dato.inicio < nodo->intervalo->inicio
-      || (dato.inicio == nodo->intervalo->inicio
-          && dato.final < nodo->intervalo->final))
-    nodo->izq = ctree_eliminar(nodo->izq, dato);
-
-  else if (dato.inicio > nodo->intervalo->inicio
-           || (dato.inicio == nodo->intervalo->inicio
-               && dato.final > nodo->intervalo->final))
-    nodo->der = ctree_eliminar(nodo->der, dato);
-
-  else {
-    if (nodo->izq == NULL || nodo->der == NULL) {
-      CTree aux = nodo->izq ? nodo->izq : nodo->der;
-      liberar_nodo(nodo);
-      nodo = aux;
-
-    } else {
-      CTree aux = buscar_sucesor(nodo->der);
-      *(nodo->intervalo) = *(aux->intervalo);
-      nodo->der = ctree_eliminar(nodo->der, *(aux->intervalo));
-    }
-  }
-
-  actualizar_altura(nodo);
-
-  return balancear(nodo);
-}
-/*/
 
 void ctree_recorrer_dfs(CTree nodo, FuncionV func) {    // In-Order
   if (nodo != NULL) {
@@ -155,9 +122,9 @@ void* ctree_buscar(char* dato, CTree nodo, FuncionComparacion comparar, FuncionO
   else if(comparar(dato, obtener_dato(nodo->dato)) == 0)
     return nodo->dato;
   else if(comparar(dato, obtener_dato(nodo->dato)) > 0)
-    ctree_buscar(dato, nodo->izq, comparar, obtener_dato);
+    return ctree_buscar(dato, nodo->izq, comparar, obtener_dato);
   else
-    ctree_buscar(dato, nodo->der, comparar, obtener_dato);
+    return ctree_buscar(dato, nodo->der, comparar, obtener_dato);
 }
 
 // DEBUGG

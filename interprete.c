@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "interprete.h"
 #include "conjunto.h"
 #include "dlist.h"
 #include "hash.h"
@@ -12,7 +13,6 @@
 int comparar_enteros(void* num1, void* num2){
     return (*(int*)num1)-(*(int*)num2);
 }
-
 
 DList* leerConjuntoExtension(char* alias, char* buffer){
     int i=0;
@@ -31,16 +31,40 @@ DList* leerConjuntoExtension(char* alias, char* buffer){
                 i++;
             else{
                 dlist_destruir(lista);
-                printf("Ingrese un comando valido\n");
                 return NULL;
             }
         }
     }
-    
     dlist_merge_sort(lista, comparar_enteros);
     dlist_eliminar_repetidos(lista, comparar_intervalo, conjunto_eliminar);
     conjunto_unificar_intervalos(lista);
     return lista;
+}
+
+void comando_conjunto(char* primerTerm, char* segundoTerm, char* tercerTerm, char caracter, CTree* tabla){
+    DList* resultado, *lista1, *lista2;
+    lista1 = (DList*)buscar_elem_tabla(segundoTerm, tabla);
+    lista2 = (DList*)buscar_elem_tabla(tercerTerm, tabla);
+    if(lista1 != NULL && lista2 != NULL){
+        switch (caracter){
+            case '|':
+                resultado = conjunto_unir(primerTerm, lista1, lista2);
+                insertar_elem_tabla(resultado, tabla, dlist_alias, dlist_comparar, 1);
+                break;
+            case '&':
+                resultado = conjunto_interseccion(primerTerm, lista1, lista2);
+                insertar_elem_tabla(resultado, tabla, dlist_alias, dlist_comparar, 1);
+                break;
+            case '-':
+                resultado = conjunto_resta(primerTerm, lista1, lista2);
+                insertar_elem_tabla(resultado, tabla, dlist_alias, dlist_comparar, 1);
+                break;
+            default:
+                mensaje_error(1);
+        }
+    }
+    else
+        mensaje_error(0);
 }
 
 DList* leerConjuntoComprension(char* alias, char* entrada){
@@ -63,42 +87,11 @@ DList* leerConjuntoComprension(char* alias, char* entrada){
         return NULL;
     }
     return NULL;
-
 }
 
-CTree* comando_conjunto(char* comando, char* entrada, char* alias, char caracter, CTree* tabla){
-    DList* resultado, *alias1, *alias2;
-    alias1 = (DList*)buscar_elem_tabla(entrada, tabla);
-    alias2 = (DList*)buscar_elem_tabla(alias, tabla);
-    if(alias1 == NULL || alias2 == NULL){
-        return NULL;
-    }
-    else{
-        switch (caracter){
-            case '|':
-                resultado = conjunto_unir(comando, alias1, alias2);
-                tabla = insertar_elem_tabla((void*)resultado, tabla, dlist_alias, dlist_comparar);
-                break;
-            case '&':
-                resultado = conjunto_interseccion(comando, alias1, alias2);
-                tabla = insertar_elem_tabla((void*)resultado, tabla, dlist_alias, dlist_comparar);
-                break;
-            case '-':
-                resultado = conjunto_resta(comando, alias1, alias2);
-                tabla = insertar_elem_tabla((void*)resultado, tabla, dlist_alias, dlist_comparar);
-                break;
-            default:
-                printf("Ingrese un comando valido\n");
-        }
-        return tabla;
-    }
-}
-
-int main(){
-    CTree* tabla = crear_tabla(), *tablaBuff;
+CTree* bucle_input(CTree* tabla){
     int salir = 0;
-    char primerTerm[1100], segundoTerm[1100], tercerTerm[1100], buffer[1100], caracter;
-    DList *lista = NULL;
+    char primerTerm[1100], buffer[1100];
     while(salir == 0){
         fgets(buffer, 1100, stdin);
         sscanf(buffer, "%s %[^\n]", primerTerm, buffer);
@@ -107,43 +100,44 @@ int main(){
             imprimir_tabla(tabla, imprimir_alias);
             liberar_tabla(tabla);
         }
+        else if(strcmp(primerTerm, "imprimir") == 0)
+            imprimir_dlist_pantalla((DList*)buscar_elem_tabla(buffer, tabla), imprimir_dato);
+        else if(buffer[0] == '=' && buffer[1] == ' '){
+            conjunto_input(buffer, primerTerm, tabla);
+        }
+        else
+            mensaje_error(1);
+        }
+    return tabla;
+}
+
+void conjunto_input(char* buffer, char* primerTerm, CTree* tabla){
+    DList *lista = NULL;
+    char segundoTerm[1100], tercerTerm[1100], caracter;
+    if(buffer[2] == '{' && buffer[strlen(buffer)-1] == '}'){
+        if((48 <= buffer[3] && buffer[3] <= 57) || buffer[3] == '-' || buffer[3]=='}'){
+            lista = leerConjuntoExtension(primerTerm, buffer);
+            insertar_elem_tabla(lista, tabla, dlist_alias, dlist_comparar, 1);
+        }
         else{
-            if(strcmp(primerTerm, "imprimir") == 0)
-                imprimir_dlist_pantalla((DList*)buscar_elem_tabla(buffer, tabla), imprimir_dato);
-            else if(buffer[0] == '=' && buffer[1] == ' '){
-                if(buffer[2] == '{' && buffer[strlen(buffer)-1] == '}'){
-                    if((48 <= buffer[3] && buffer[3] <= 57) || buffer[3] == '-' || buffer[3]=='}'){
-                        lista = leerConjuntoExtension(primerTerm, buffer);
-                        if(lista != NULL)
-                            tabla = insertar_elem_tabla((void*)lista, tabla, dlist_alias, dlist_comparar);
-                    }
-                    else{
-                        lista = leerConjuntoComprension(primerTerm, buffer);
-                        if(lista == NULL)
-                            printf("Ingrese un comando valido\n");
-                        else
-                            tabla = insertar_elem_tabla((void*)lista, tabla, dlist_alias, dlist_comparar);
-                    }
-                }
-                else if(buffer[2] == '~'){
-                    lista = (DList*)buscar_elem_tabla(buffer+3, tabla);
-                    if(lista != NULL)
-                        tabla = insertar_elem_tabla((void*)conjunto_complemento(primerTerm, lista), tabla, dlist_alias, dlist_comparar);
-                    else
-                        printf("No se encontró el alias buscado\n");
-                }
-                else{
-                    sscanf(buffer, "= %s %c %s", segundoTerm, &caracter, tercerTerm);
-                    tablaBuff = comando_conjunto(primerTerm, segundoTerm, tercerTerm, caracter, tabla);
-                    if(tablaBuff != NULL)
-                        tabla = tablaBuff;
-                    else
-                        printf("No se encontró el alias buscado\n");
-                }
-            }
-            else
-                printf("Ingrese un comando valido\n");
+            lista = leerConjuntoComprension(primerTerm, buffer);
+            insertar_elem_tabla(lista, tabla, dlist_alias, dlist_comparar, 1);
         }
     }
+    else if(buffer[2] == '~'){
+        lista = (DList*)buscar_elem_tabla(buffer+3, tabla);
+        insertar_elem_tabla(conjunto_complemento(primerTerm, lista), tabla, dlist_alias, dlist_comparar, 0);
+    }
+    else{
+        sscanf(buffer, "= %s %c %s", segundoTerm, &caracter, tercerTerm);
+        comando_conjunto(primerTerm, segundoTerm, tercerTerm, caracter, tabla);
+    }
+}
+
+int main(){
+    CTree* tabla = crear_tabla();
+
+    tabla = bucle_input(tabla);
+
     return 0;
 }

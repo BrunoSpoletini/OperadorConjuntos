@@ -31,9 +31,6 @@ void ctree_destruir(CTree nodo, FuncionV liberar);
 // Inserta un intervalo en un arbol de intervalos.
 CTree ctree_insertar(CTree raiz, void* dato, FuncionComparacion comparar, FuncionV liberar);
 
-// Elimina un intervalo de un arbol de intervalos.
-CTree ctree_eliminar(CTree raiz, void* dato);
-
 // Determina si un intervalo se interseca con alguno de los intervalos del arbol y, en caso afirmativo,
 // retorna un apuntador al nodo correspondiente.
 CTree ctree_intersecar(CTree raiz, void* dato);
