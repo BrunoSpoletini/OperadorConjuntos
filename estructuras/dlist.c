@@ -5,7 +5,7 @@ DList *dlist_crear(char *alias) {
   DList *lista = malloc(sizeof(DList));
   lista->primero = NULL;
   lista->ultimo = NULL;
-  lista->alias = malloc(sizeof(char) * (strlen(alias)));
+  lista->alias = malloc(sizeof(char) * (strlen(alias) + 1));
   strcpy(lista->alias, alias);
   return lista;
 }

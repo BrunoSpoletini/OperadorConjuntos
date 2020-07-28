@@ -65,7 +65,7 @@ void comando_conjunto(char *primerTerm, char *segundoTerm, char *tercerTerm,
 
 DList *leerConjuntoComprension(char *alias, char *entrada) {
   char char1, char2;
-  ElemConj *elem = malloc(sizeof(ElemConj));
+  ElemConj *elem = malloc(sizeof(int)*2);
   if ((sscanf
        (entrada, "= {%c : %d <= %c <= %d}", &char1, &(elem->inicio), &char2,
         &(elem->extremo)) == 4)
