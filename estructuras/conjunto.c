@@ -51,9 +51,10 @@ DList *conjunto_unir(char *alias, DList * lista1, DList * lista2) {
     } else if (x < a && y < a) {        // {x  y} [a  b]
       resultado = agregar_intervalo(resultado, x, y);
       nodoXY = nodoXY->sig;
-    } else if ((a <= x && b >= y) || (x <= a && y >= b)) {
+    } else if ((((a < x) || (a == x)) && ((b > y) || (b == y))) ||
+              ((((x < a) || (x == a)) && ((y > b) || (y == b))))) {
       // [a  {x y}  b]   ó    {x  [a   b]  y}
-      (a < x) ? (nodoXY = nodoXY->sig) : (nodoAB = nodoAB->sig);
+      (a <= x) ? (nodoXY = nodoXY->sig) : (nodoAB = nodoAB->sig);
     } else if ((a < x && b >= x) || (x < a && y >= a)) {
       if (a < x) {              // [a  {x  b]  y}
         resultado = agregar_intervalo(resultado, a, y);
@@ -62,7 +63,7 @@ DList *conjunto_unir(char *alias, DList * lista1, DList * lista2) {
       }
       nodoAB = nodoAB->sig;
       nodoXY = nodoXY->sig;
-    }
+    } 
   }
   while (nodoAB != NULL) {
     resultado =
@@ -86,7 +87,6 @@ void conjunto_unificar_intervalos(DList * lista) {
       ((ElemConj *) (nodo->dato))->inicio = obt_inicio(nodo->ant);
       eliminar_nodo(lista, nodo->ant, conjunto_eliminar);
     }
-
   }
 }
 

@@ -34,12 +34,12 @@ void mensaje_error(int num) {
 void insertar_elem_tabla(void *dato, CTree * tabla,
                          FuncionObtencion obtenerCadena,
                          FuncionComparacion dlistComparar, int codigoError) {
-  int hash = hash_string(obtenerCadena(dato));
-  if (dato != NULL)
+  if (dato != NULL){
+    int hash = hash_string(obtenerCadena(dato));
     tabla[hash] =
         ctree_insertar(tabla[hash], dato, dlistComparar, dlist_destruir);
-  else
-    mensaje_error(codigoError);
+  } else
+      mensaje_error(codigoError);
 }
 
 void *buscar_elem_tabla(char *string, CTree * tabla) {

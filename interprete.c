@@ -118,9 +118,12 @@ void conjunto_input(char *buffer, char *primerTerm, CTree * tabla) {
       insertar_elem_tabla(lista, tabla, dlist_alias, dlist_comparar, 1);
     }
   } else if (buffer[2] == '~') {
-    lista = (DList *) buscar_elem_tabla(buffer + 3, tabla);
-    insertar_elem_tabla(conjunto_complemento(primerTerm, lista), tabla,
-                        dlist_alias, dlist_comparar, 0);
+      if(buffer[3] == ' ')
+        lista = (DList *) buscar_elem_tabla(buffer + 4, tabla);
+      else
+        lista = (DList *) buscar_elem_tabla(buffer + 3, tabla);
+      insertar_elem_tabla(conjunto_complemento(primerTerm, lista), tabla,
+                          dlist_alias, dlist_comparar, 0);
   } else {
     if(sscanf(buffer, "= %s %c %s", segundoTerm, &caracter, tercerTerm) == 3)
       comando_conjunto(primerTerm, segundoTerm, tercerTerm, caracter, tabla);
