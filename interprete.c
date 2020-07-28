@@ -87,9 +87,9 @@ DList *leerConjuntoComprension(char *alias, char *entrada) {
 
 CTree *bucle_input(CTree * tabla) {
   int salir = 0;
-  char primerTerm[1100], buffer[1100];
+  char primerTerm[1100], buffer[2100];
   while (salir == 0) {
-    fgets(buffer, 1100, stdin);
+    fgets(buffer, 2100, stdin);
     sscanf(buffer, "%s %[^\n]", primerTerm, buffer);
     if (strcmp(primerTerm, "salir") == 0) {
       salir = 1;
