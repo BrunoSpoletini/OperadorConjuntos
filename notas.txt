@@ -2,8 +2,11 @@ gcc hash.c && ./a.exe
 
 #include <limits.h>
 
+indent -kr -brf -i2 -l80 -nut somefile.c
+indent -kr -brf -i2 -l80 -nut -R
+
 A2 = {-10,4,6,-7}
-A1 = {x : 2 <= x <= 10}
+A1 = {x : 1 <= x <= 1}
 A = A | A1 Union
 A = A & A1 Interseccion
 A = A - A1 Resta
@@ -29,6 +32,14 @@ borrar funciones de testeo
 hacer informe
 
 valgrind --leak-check=yes myprog arg1 arg2
+
+
+a = {1,2}
+b = {}
+a = ~a
+b = ~b
+c = a | b
+imprimir c
 
 
 a = {1,2,3,4}

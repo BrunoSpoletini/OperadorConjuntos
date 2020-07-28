@@ -25,7 +25,7 @@ void actualizar_altura(CTree nodo) {
     nodo->altura = MAX(altura(nodo->izq), altura(nodo->der)) + 1;
 }
 
-CTree llenar_nodo(void* dato) {
+CTree llenar_nodo(void *dato) {
   CTree nodo = malloc(sizeof(CNodo));
   nodo->izq = NULL;
   nodo->der = NULL;
@@ -78,15 +78,15 @@ CTree balancear(CTree nodo) {
 }
 
 
-CTree ctree_insertar(CTree nodo, void* dato, FuncionComparacion comparar, FuncionV liberar) {
+CTree ctree_insertar(CTree nodo, void *dato, FuncionComparacion comparar,
+                     FuncionV liberar) {
   if (nodo == NULL)
     nodo = llenar_nodo(dato);
   else {
-    if(comparar(nodo->dato, dato) == 0){
+    if (comparar(nodo->dato, dato) == 0) {
       liberar(nodo->dato);
       nodo->dato = dato;
-    }
-    else if(comparar(nodo->dato, dato) < 0)
+    } else if (comparar(nodo->dato, dato) < 0)
       nodo->izq = ctree_insertar(nodo->izq, dato, comparar, liberar);
     else
       nodo->der = ctree_insertar(nodo->der, dato, comparar, liberar);
@@ -116,22 +116,14 @@ void ctree_recorrer_dfs(CTree nodo, FuncionV func) {    // In-Order
 }
 
 
-void* ctree_buscar(char* dato, CTree nodo, FuncionComparacion comparar, FuncionObtencion obtener_dato){
-  if(nodo == NULL)
+void *ctree_buscar(char *dato, CTree nodo, FuncionComparacion comparar,
+                   FuncionObtencion obtener_dato) {
+  if (nodo == NULL)
     return NULL;
-  else if(comparar(dato, obtener_dato(nodo->dato)) == 0)
+  else if (comparar(dato, obtener_dato(nodo->dato)) == 0)
     return nodo->dato;
-  else if(comparar(dato, obtener_dato(nodo->dato)) > 0)
+  else if (comparar(dato, obtener_dato(nodo->dato)) > 0)
     return ctree_buscar(dato, nodo->izq, comparar, obtener_dato);
   else
     return ctree_buscar(dato, nodo->der, comparar, obtener_dato);
-}
-
-// DEBUGG
-
-int aaa(CTree nodo){
-  if (nodo != NULL) {
-    return aaa(nodo->izq) + aaa(nodo->der) + 1;
-  }
-  return 0;
 }
