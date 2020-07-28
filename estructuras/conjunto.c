@@ -45,24 +45,31 @@ DList *conjunto_unir(char *alias, DList * lista1, DList * lista2) {
     b = ((ElemConj *) (nodoAB->dato))->extremo;
     x = ((ElemConj *) (nodoXY->dato))->inicio;
     y = ((ElemConj *) (nodoXY->dato))->extremo;
-    if (a < x && b < x) {       // [a b] {x y}
+    if(a == x){
+      if(b >= y)// [{ax  y}  b]
+        nodoXY = nodoXY->sig;
+      else
+        nodoAB = nodoAB->sig;
+    }
+    else if (a < x && b < x) {       // [a b] {x y}
       resultado = agregar_intervalo(resultado, a, b);
       nodoAB = nodoAB->sig;
     } else if (x < a && y < a) {        // {x  y} [a  b]
       resultado = agregar_intervalo(resultado, x, y);
       nodoXY = nodoXY->sig;
-    } else if ((((a < x) || (a == x)) && ((b > y) || (b == y))) ||
-              ((((x < a) || (x == a)) && ((y > b) || (y == b))))) {
+    } else if (((a <= x) && (b > y)) || ((x <= a) && (y > b))) {
       // [a  {x y}  b]   ó    {x  [a   b]  y}
       (a <= x) ? (nodoXY = nodoXY->sig) : (nodoAB = nodoAB->sig);
     } else if ((a < x && b >= x) || (x < a && y >= a)) {
       if (a < x) {              // [a  {x  b]  y}
-        resultado = agregar_intervalo(resultado, a, y);
+        resultado = agregar_intervalo(resultado, a, x);
+        nodoAB = nodoAB->sig;
       } else {                  // [x  {a  y]  b}
-        resultado = agregar_intervalo(resultado, x, b);
+        resultado = agregar_intervalo(resultado, x, a);
+        nodoXY = nodoXY->sig;
       }
-      nodoAB = nodoAB->sig;
-      nodoXY = nodoXY->sig;
+      
+      
     } 
   }
   while (nodoAB != NULL) {
@@ -89,6 +96,9 @@ void conjunto_unificar_intervalos(DList * lista) {
     }
   }
 }
+
+
+
 
 DList *conjunto_complemento(char *alias, DList * lista) {
   DList *resultado = dlist_crear(alias);
